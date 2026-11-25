@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- 网格和占用区域来自用户提供的 PowerPoint 第 12 页，色彩适配深色背景。 -->
+  <defs>
+    <pattern id="noise-grid" width="2" height="2" patternUnits="userSpaceOnUse">
+      <rect width="2" height="2" fill="#747981"/>
+      <path d="M0 0H1V1H0Z M1 1H2V2H1Z" fill="#b4b8bd"/>
+    </pattern>
+    <linearGradient id="latent-cell" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#bce46d"/>
+      <stop offset="42%" stop-color="#65bba9"/>
+      <stop offset="100%" stop-color="#9b83e3"/>
+    </linearGradient>
+    <linearGradient id="feature-color" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec8bb6"/>
+      <stop offset="30%" stop-color="#ffcc62"/>
+      <stop offset="57%" stop-color="#b9e36b"/>
+      <stop offset="82%" stop-color="#66bfd1"/>
+      <stop offset="100%" stop-color="#a298e6"/>
+    </linearGradient>
+  </defs>
+  <symbol id="random-noise" viewBox="0 0 8 8">
+      <rect width="8" height="8" fill="url(#noise-grid)"/>
+      <path d="M1 0V8 M0 1H8 M2 0V8 M0 2H8 M3 0V8 M0 3H8 M4 0V8 M0 4H8 M5 0V8 M0 5H8 M6 0V8 M0 6H8 M7 0V8 M0 7H8" fill="none" stroke="#33373c" stroke-width="0.055"/>
+      <rect x="0.05" y="0.05" width="7.9" height="7.9" fill="none" stroke="#b4b8bd" stroke-width="0.08"/>
+  </symbol>
+  <symbol id="structure-latent" viewBox="0 0 8 8">
+      <rect width="8" height="8" fill="#2d485e"/>
+      <rect x="4" y="0" width="1" height="1" fill="#76b7e5"/>
+      <rect x="3" y="1" width="1" height="1" fill="#76b7e5"/>
+      <rect x="4" y="1" width="1" height="1" fill="#76b7e5"/>
+      <rect x="3" y="2" width="1" height="1" fill="#76b7e5"/>
+      <rect x="4" y="2" width="1" height="1" fill="#76b7e5"/>
+      <rect x="0" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="1" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="2" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="3" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="4" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="5" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="6" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="7" y="3" width="1" height="1" fill="#76b7e5"/>
+      <rect x="2" y="4" width="1" height="1" fill="#76b7e5"/>
+      <rect x="5" y="4" width="1" height="1" fill="#76b7e5"/>
+      <rect x="6" y="4" width="1" height="1" fill="#76b7e5"/>
+      <rect x="2" y="5" width="1" height="1" fill="#76b7e5"/>
+      <rect x="3" y="5" width="1" height="1" fill="#76b7e5"/>
+      <rect x="4" y="5" width="1" height="1" fill="#76b7e5"/>
+      <rect x="5" y="5" width="1" height="1" fill="#76b7e5"/>
+      <rect x="2" y="6" width="1" height="1" fill="#76b7e5"/>
+      <rect x="3" y="6" width="1" height="1" fill="#76b7e5"/>
+      <rect x="4" y="6" width="1" height="1" fill="#76b7e5"/>
+      <rect x="5" y="6" width="1" height="1" fill="#76b7e5"/>
+      <rect x="6" y="6" width="1" height="1" fill="#76b7e5"/>
+      <rect x="2" y="7" width="1" height="1" fill="#76b7e5"/>
+      <rect x="5" y="7" width="1" height="1" fill="#76b7e5"/>
+      <rect x="6" y="7" width="1" height="1" fill="#76b7e5"/>
+      <path d="M1 0V8 M0 1H8 M2 0V8 M0 2H8 M3 0V8 M0 3H8 M4 0V8 M0 4H8 M5 0V8 M0 5H8 M6 0V8 M0 6H8 M7 0V8 M0 7H8" fill="none" stroke="#1e3040" stroke-width="0.065"/>
+      <rect x="0.05" y="0.05" width="7.9" height="7.9" fill="none" stroke="#78afd1" stroke-width="0.08"/>
+  </symbol>
+  <symbol id="active-voxel" viewBox="0 0 16 16">
+      <rect width="16" height="16" fill="#30343b"/>
+      <rect x="7" y="1" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="7" y="2" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="8" y="2" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="6" y="3" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="7" y="3" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="8" y="3" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="6" y="4" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="8" y="4" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="6" y="5" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="8" y="5" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="9" y="5" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="0" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="1" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="2" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="3" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="5" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="6" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="9" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="10" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="11" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="12" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="13" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="14" y="6" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="1" y="7" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="2" y="7" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="12" y="7" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="13" y="7" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="3" y="8" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="8" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="11" y="8" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="12" y="8" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="9" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="5" y="9" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="10" y="9" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="10" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="10" y="10" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="11" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="7" y="11" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="10" y="11" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="5" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="6" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="8" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="9" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="11" y="12" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="3" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="5" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="9" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="10" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="11" y="13" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="3" y="14" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="4" y="14" width="1" height="1" fill="#c7cbd0"/>
+      <rect x="11" y="14" width="1" height="1" fill="#c7cbd0"/>
+      <path d="M1 0V16 M0 1H16 M2 0V16 M0 2H16 M3 0V16 M0 3H16 M4 0V16 M0 4H16 M5 0V16 M0 5H16 M6 0V16 M0 6H16 M7 0V16 M0 7H16 M8 0V16 M0 8H16 M9 0V16 M0 9H16 M10 0V16 M0 10H16 M11 0V16 M0 11H16 M12 0V16 M0 12H16 M13 0V16 M0 13H16 M14 0V16 M0 14H16 M15 0V16 M0 15H16" fill="none" stroke="#555b63" stroke-width="0.085"/>
+      <rect x="0.05" y="0.05" width="15.9" height="15.9" fill="none" stroke="#9da3aa" stroke-width="0.1"/>
+  </symbol>
+  <symbol id="sparse-noise" viewBox="0 0 16 16">
+      <rect x="7" y="1" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="7" y="2" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="8" y="2" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="6" y="3" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="7" y="3" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="8" y="3" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="6" y="4" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="8" y="4" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="6" y="5" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="8" y="5" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="9" y="5" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="0" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="1" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="2" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="3" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="5" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="6" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="9" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="10" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="11" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="12" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="13" y="6" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="14" y="6" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="1" y="7" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="2" y="7" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="12" y="7" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="13" y="7" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="3" y="8" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="8" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="11" y="8" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="12" y="8" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="9" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="5" y="9" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="10" y="9" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="10" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="10" y="10" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="11" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="7" y="11" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="10" y="11" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="12" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="5" y="12" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="6" y="12" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="8" y="12" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="9" y="12" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="11" y="12" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="3" y="13" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="13" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="5" y="13" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="9" y="13" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="10" y="13" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="11" y="13" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="3" y="14" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="4" y="14" width="1" height="1" fill="#aeb3ba" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="11" y="14" width="1" height="1" fill="#696f77" stroke="#272a2f" stroke-width="0.09"/>
+      <rect x="0.05" y="0.05" width="15.9" height="15.9" fill="none" stroke="#858b94" stroke-width="0.12"/>
+  </symbol>
+  <symbol id="shape-latent" viewBox="0 0 16 16">
+      <rect x="7" y="1" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="7" y="2" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="8" y="2" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="6" y="3" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="7" y="3" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="8" y="3" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="6" y="4" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="8" y="4" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="6" y="5" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="8" y="5" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="9" y="5" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="0" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="1" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="2" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="3" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="5" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="6" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="9" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="10" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="11" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="12" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="13" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="14" y="6" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="1" y="7" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="2" y="7" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="12" y="7" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="13" y="7" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="3" y="8" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="8" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="11" y="8" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="12" y="8" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="9" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="5" y="9" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="10" y="9" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="10" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="10" y="10" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="11" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="7" y="11" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="10" y="11" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="5" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="6" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="8" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="9" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="11" y="12" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="3" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="5" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="9" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="10" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="11" y="13" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="3" y="14" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="4" y="14" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="11" y="14" width="1" height="1" fill="url(#latent-cell)" stroke="#30343b" stroke-width="0.09"/>
+      <rect x="0.05" y="0.05" width="15.9" height="15.9" fill="none" stroke="#858b94" stroke-width="0.12"/>
+  </symbol>
+  <symbol id="ovoxel-feature" viewBox="0 0 16 16">
+      <rect x="0.05" y="0.05" width="15.9" height="15.9" fill="none" stroke="#858b94" stroke-width="0.12"/>
+      <polygon points="8.000,1.000 9.646,5.735 14.657,5.837 10.663,8.865 12.114,13.663 8.000,10.800 3.886,13.663 5.337,8.865 1.343,5.837 6.354,5.735" fill="none" stroke="url(#feature-color)" stroke-width="0.22" stroke-linejoin="round"/>
+  </symbol>
+</svg>

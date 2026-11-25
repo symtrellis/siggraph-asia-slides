@@ -1,0 +1,829 @@
+{
+  "coordinates": "GLB Y-up; symmetry config Z-up",
+  "models": [
+    {
+      "triangle_count": 630866,
+      "vertex_count": 445306,
+      "geometry_bytes": 21820184,
+      "texture_bytes": 2554323,
+      "bytes": 24376100,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7069752,
+          "compressed_bytes": 1403621,
+          "channel_rmse_8bit": [
+            1.628999948501587,
+            1.5642000436782837,
+            1.6715999841690063
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3748896,
+          "compressed_bytes": 1150702,
+          "channel_rmse_8bit": [
+            0.4611999988555908,
+            0.7980999946594238,
+            2.020900011062622
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 443778,
+        "faces": 630866,
+        "exact_unique_positions": 312372,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 1443,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 11,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 25,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "80f43aba8a253fa78ed56bb4915358b0f4187696a0016044ee6812d6b2470be6",
+      "geometry_comparison": {
+        "original_triangles": 981308,
+        "source_to_compressed": {
+          "rms": 1.9540360881364904e-05,
+          "p95": 4.039764462504536e-05,
+          "p99": 7.278943667188287e-05,
+          "maximum": 0.000300555577268824
+        },
+        "compressed_to_source": {
+          "rms": 1.997487743210513e-05,
+          "p95": 4.096738848602399e-05,
+          "p99": 7.544219988631085e-05,
+          "maximum": 0.00035203128936700523
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "03_silvercup_symtrellis",
+      "source_sha256": "4eb17e44f25264ba8f88fa15935b7275db6fc899c98c42dc38932e92818c6cdc",
+      "source_bytes": 69963520,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 14.44,
+      "file": "03_silvercup_symtrellis.glb",
+      "example": "03_silvercup",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "C3v",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 619358,
+      "vertex_count": 528037,
+      "geometry_bytes": 24329480,
+      "texture_bytes": 1630217,
+      "bytes": 25961284,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6049164,
+          "compressed_bytes": 1282948,
+          "channel_rmse_8bit": [
+            1.7503000497817993,
+            1.5507999658584595,
+            1.5448999404907227
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 1080004,
+          "compressed_bytes": 347269,
+          "channel_rmse_8bit": [
+            0.6628999710083008,
+            0.510200023651123,
+            0.6470000147819519
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 515746,
+        "faces": 619358,
+        "exact_unique_positions": 293659,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 10355,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 12,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 1291,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "9ebdea202d80eaac1fe24246edbdbbfaa61f9ebbdca6ec2b7e35014528328b86",
+      "geometry_comparison": {
+        "original_triangles": 967250,
+        "source_to_compressed": {
+          "rms": 4.873162106378004e-05,
+          "p95": 9.224954555975273e-05,
+          "p99": 0.0001443250512238592,
+          "maximum": 0.0030516874976456165
+        },
+        "compressed_to_source": {
+          "rms": 4.327233546064235e-05,
+          "p95": 9.203950321534649e-05,
+          "p99": 0.00014033073966857046,
+          "maximum": 0.0004154589551035315
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "04_lotus_symtrellis",
+      "source_sha256": "5ef5e500ab39bbb2f599eddd4db11363e96c1d513fb154445d8a7542d709a702",
+      "source_bytes": 60148108,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 14.78,
+      "file": "04_lotus_symtrellis.glb",
+      "example": "04_lotus",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "C5",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 644285,
+      "vertex_count": 593394,
+      "geometry_bytes": 24346452,
+      "texture_bytes": 3796846,
+      "bytes": 28144904,
+      "uv_16bit": true,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 8826512,
+          "compressed_bytes": 3057848,
+          "channel_rmse_8bit": [
+            3.5555999279022217,
+            2.4077999591827393,
+            4.402699947357178
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2857872,
+          "compressed_bytes": 738998,
+          "channel_rmse_8bit": [
+            0.6169999837875366,
+            0.5906999707221985,
+            1.5501999855041504
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 576779,
+        "faces": 644285,
+        "exact_unique_positions": 299653,
+        "boundary_edges": 1,
+        "nonmanifold_edges": 13992,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 12,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 2555,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "f7c60e374f94ee64f4965ff577cdc05683e8f9bcb2f375f3934265971ab82305",
+      "geometry_comparison": {
+        "original_triangles": 988157,
+        "source_to_compressed": {
+          "rms": 6.97238720022142e-05,
+          "p95": 6.201832729857415e-05,
+          "p99": 0.00012986767978873104,
+          "maximum": 0.0029718377627432346
+        },
+        "compressed_to_source": {
+          "rms": 2.6550893380772322e-05,
+          "p95": 5.985046664136462e-05,
+          "p99": 0.00011518216342665255,
+          "maximum": 0.0003560977929737419
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "07_icosahedral_symtrellis",
+      "source_sha256": "29dcb365c47d9b7078d5a9ccf90778fbabd1b4cd7927542cb9d6d54a4362d7bb",
+      "source_bytes": 76537636,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 34.25,
+      "file": "07_icosahedral_symtrellis.glb",
+      "example": "07_icosahedral",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "I",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 636670,
+      "vertex_count": 414778,
+      "geometry_bytes": 20912936,
+      "texture_bytes": 2629469,
+      "bytes": 23543996,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6527652,
+          "compressed_bytes": 1253300,
+          "channel_rmse_8bit": [
+            1.569200038909912,
+            1.4567999839782715,
+            1.6871999502182007
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3478748,
+          "compressed_bytes": 1376169,
+          "channel_rmse_8bit": [
+            0.9077000021934509,
+            1.1603000164031982,
+            1.597000002861023
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 412406,
+        "faces": 636670,
+        "exact_unique_positions": 314548,
+        "boundary_edges": 12,
+        "nonmanifold_edges": 2293,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 10,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 796,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "e9fad09e70d1bc971dde5da45ad4ce9179b6ef749f80e09a5e1736ca294d845c",
+      "geometry_comparison": {
+        "original_triangles": 935653,
+        "source_to_compressed": {
+          "rms": 2.6108435122296214e-05,
+          "p95": 5.406046693678945e-05,
+          "p99": 0.00010724821186158806,
+          "maximum": 0.0005802798550575972
+        },
+        "compressed_to_source": {
+          "rms": 2.5471053959336132e-05,
+          "p95": 5.3753294196212664e-05,
+          "p99": 0.00010468469554325566,
+          "maximum": 0.00033643050119280815
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "08_gear_symtrellis",
+      "source_sha256": "715d13f5242247e1ab850775214086afbec51c5eeb5f25fa491a75f7b8fdef6e",
+      "source_bytes": 64648628,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 17.99,
+      "file": "08_gear_symtrellis.glb",
+      "example": "08_gear",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "C13h",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 628515,
+      "vertex_count": 451463,
+      "geometry_bytes": 21988996,
+      "texture_bytes": 2668654,
+      "bytes": 24659240,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 5798644,
+          "compressed_bytes": 1156881,
+          "channel_rmse_8bit": [
+            1.5360000133514404,
+            1.4417999982833862,
+            1.583299994468689
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2370340,
+          "compressed_bytes": 1511773,
+          "channel_rmse_8bit": [
+            0.9262999892234802,
+            1.1663999557495117,
+            1.5111000537872314
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 445397,
+        "faces": 628515,
+        "exact_unique_positions": 308264,
+        "boundary_edges": 1,
+        "nonmanifold_edges": 4731,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 12,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 751,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "ac5e09e106246bdd0996278265702ecdbba0e5205608a40a76099c5a8fba8613",
+      "geometry_comparison": {
+        "original_triangles": 988695,
+        "source_to_compressed": {
+          "rms": 4.2944884626194835e-05,
+          "p95": 6.74133189022541e-05,
+          "p99": 0.00012006166070932522,
+          "maximum": 0.003561652498319745
+        },
+        "compressed_to_source": {
+          "rms": 3.1151954317465425e-05,
+          "p95": 6.747037696186453e-05,
+          "p99": 0.0001153741468442604,
+          "maximum": 0.0004484033852349967
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "09_omniwheel_symtrellis",
+      "source_sha256": "dd3321c9e99f6feacc80ecd76b6f42d04fba110d30d9a447c618efb99d293d1a",
+      "source_bytes": 60739544,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 36.64,
+      "file": "09_omniwheel_symtrellis.glb",
+      "example": "09_omniwheel",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "D5h",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 636835,
+      "vertex_count": 515421,
+      "geometry_bytes": 24135492,
+      "texture_bytes": 3555320,
+      "bytes": 27692404,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6303252,
+          "compressed_bytes": 1044298,
+          "channel_rmse_8bit": [
+            1.3885999917984009,
+            1.3753000497817993,
+            1.4940999746322632
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4633044,
+          "compressed_bytes": 2511022,
+          "channel_rmse_8bit": [
+            1.2563999891281128,
+            1.6605000495910645,
+            2.6445999145507812
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 510692,
+        "faces": 636835,
+        "exact_unique_positions": 310556,
+        "boundary_edges": 3,
+        "nonmanifold_edges": 5462,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 10,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 1436,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "3e084d60fc16ce6519a78a75c66b593fc646ca22a37da961318d6153687d97b6",
+      "geometry_comparison": {
+        "original_triangles": 989875,
+        "source_to_compressed": {
+          "rms": 6.962346378713846e-05,
+          "p95": 8.84143664734438e-05,
+          "p99": 0.00014776946045458317,
+          "maximum": 0.003243058454245329
+        },
+        "compressed_to_source": {
+          "rms": 4.154470298090018e-05,
+          "p95": 8.663376502227038e-05,
+          "p99": 0.0001377146691083908,
+          "maximum": 0.002115025417879224
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "10_artifact_symtrellis",
+      "source_sha256": "0f266eade13a232dec8646ddf6e9e1c6d2e6ba9d43c0984f2151dd5a76c1658c",
+      "source_bytes": 73163128,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 21.89,
+      "file": "10_artifact_symtrellis.glb",
+      "example": "10_artifact",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "C8v",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 632362,
+      "vertex_count": 432374,
+      "geometry_bytes": 21424312,
+      "texture_bytes": 3195864,
+      "bytes": 24621764,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6547464,
+          "compressed_bytes": 1367804,
+          "channel_rmse_8bit": [
+            1.5966999530792236,
+            1.5436999797821045,
+            1.7490999698638916
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3270752,
+          "compressed_bytes": 1828060,
+          "channel_rmse_8bit": [
+            0.9692000150680542,
+            1.2344000339508057,
+            2.5028998851776123
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 428133,
+        "faces": 632362,
+        "exact_unique_positions": 310457,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 4669,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 11,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 358,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "5a127b8ac9be0f8eba1c98ea4498440e3159bf3fa7c2d3364b1cc180e9d2c208",
+      "geometry_comparison": {
+        "original_triangles": 975314,
+        "source_to_compressed": {
+          "rms": 3.281229146523401e-05,
+          "p95": 6.391353235812858e-05,
+          "p99": 0.00011331871792208403,
+          "maximum": 0.0028388025239109993
+        },
+        "compressed_to_source": {
+          "rms": 2.8738120818161406e-05,
+          "p95": 6.18363410467282e-05,
+          "p99": 0.00010935569298453629,
+          "maximum": 0.0013396498980000615
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "11_blade_symtrellis",
+      "source_sha256": "200a6ac28ff4ffc329c4545e59570680ac10768510bee8a85de3ed94de195596",
+      "source_bytes": 64869164,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 14.96,
+      "file": "11_blade_symtrellis.glb",
+      "example": "11_blade",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "C10",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "triangle_count": 643680,
+      "vertex_count": 505546,
+      "geometry_bytes": 23901632,
+      "texture_bytes": 3144403,
+      "bytes": 27047624,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6123500,
+          "compressed_bytes": 2171981,
+          "channel_rmse_8bit": [
+            2.8977999687194824,
+            1.9215999841690063,
+            3.306299924850464
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 1848764,
+          "compressed_bytes": 972422,
+          "channel_rmse_8bit": [
+            0.6503999829292297,
+            1.0920000076293945,
+            0.8137999773025513
+          ]
+        }
+      ],
+      "normal_report": {
+        "vertices": 496067,
+        "faces": 643680,
+        "exact_unique_positions": 306438,
+        "boundary_edges": 6,
+        "nonmanifold_edges": 12349,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 16,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 726,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "output_sha256": "ce03db60933dea24d06ec56ea49410d93938f9696cef2fbae165bed963e425b4",
+      "geometry_comparison": {
+        "original_triangles": 995307,
+        "source_to_compressed": {
+          "rms": 4.5333043090067804e-05,
+          "p95": 9.03187392395921e-05,
+          "p99": 0.00014262739568948746,
+          "maximum": 0.0017943942220881581
+        },
+        "compressed_to_source": {
+          "rms": 4.1378341848030686e-05,
+          "p95": 8.959160913946107e-05,
+          "p99": 0.00013879418838769197,
+          "maximum": 0.0003333618224132806
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "name": "12_omniwheel_symtrellis",
+      "source_sha256": "4e083650411a54864a0a6c925f547ac30dbb4b555c98d54dc5a6525bf165a0d9",
+      "source_bytes": 62220340,
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "elapsed_seconds": 17.67,
+      "file": "12_omniwheel_symtrellis.glb",
+      "example": "12_omniwheel",
+      "variant": "symtrellis",
+      "textured": true,
+      "symmetry": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "label": "D9",
+        "majorAxis": [
+          0,
+          0,
+          1
+        ],
+        "minorAxis": [
+          1,
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

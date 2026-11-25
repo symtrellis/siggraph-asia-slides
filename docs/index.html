@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SymTRELLIS: Symmetry-Enforced Voxel Latents for 3D Generation</title>
+    <link rel="stylesheet" href="./slides.css?v=visuals-gallery">
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three/build/three.module.min.js" } }
+    </script>
+  </head>
+  <body>
+    <main class="slide title-slide" aria-labelledby="paper-title">
+      <header class="sfu-header">
+        <img class="sfu-logo" src="./assets/images/SFU_block_colour_rgb.svg" alt="SFU">
+      </header>
+
+      <div class="title-content">
+        <div class="title-block">
+          <h1 id="paper-title">
+            <span class="paper-name">SymTRELLIS</span>
+            <span class="paper-description">Symmetry-Enforced Voxel Latents<br>
+              for 3D Generation</span>
+          </h1>
+          <p class="authors"><strong>Guangda Ji</strong>, Qimin Chen, Qinchan Li, Mingrui Zhao, Kai Wang, Hao Zhang</p>
+        </div>
+      </div>
+    </main>
+
+    <section class="slide" aria-label="Slide 2" hidden>
+      <h2 class="centered-question">What is the difference between the two spinning tops?</h2>
+    </section>
+
+    <section class="slide" aria-label="Slide 3" hidden>
+      <div class="video-comparison">
+        <video data-source="./assets/videos/trellis2_kalman_crop.mp4" preload="auto" playsinline></video>
+        <video data-source="./assets/videos/symtrellis_kalman_crop.mp4" preload="auto" playsinline></video>
+        <div class="comparison-controls" role="group" aria-label="两段视频的共用控制">
+          <button class="comparison-toggle" type="button" aria-label="播放两段视频"></button>
+          <input class="comparison-progress" type="range" min="0" max="0" step="any" value="0"
+                 aria-label="两段视频的共用进度" disabled>
+        </div>
+      </div>
+      <template data-animation-step data-play-comparison></template>
+    </section>
+
+    <section class="slide" aria-label="Slide 4" hidden>
+      <div class="spinning-top-gallery">
+        <canvas class="spinning-top-views" aria-label="两种陀螺模型的俯视图和斜视图"></canvas>
+        <div class="spinning-top-names">
+          <span>vanilla TRELLIS.2</span>
+          <span>SymTRELLIS (Ours)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 5" hidden>
+      <div class="shape-gallery">
+        <div class="shape-gallery-labels">
+          <span>vanilla TRELLIS.2</span>
+          <span>SymTRELLIS (Ours)</span>
+        </div>
+        <canvas class="shape-gallery-views" aria-label="四组模型的旋转对比"></canvas>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 6" hidden>
+      <canvas class="sector-gear-view" aria-label="齿轮 Sector Replication 结果"></canvas>
+      <p class="sector-gear-caption">Sometimes, it is even impossible to segment and choose a valid sector to replicate...</p>
+    </section>
+
+    <section class="slide" aria-label="Slide 7" hidden>
+      <h2 class="slide-heading">How we solve it?</h2>
+      <div class="density-star-demo">
+        <div class="density-star-copies" aria-hidden="true">
+          <img class="density-star density-star-copy" src="./assets/images/density-star.png" width="768" height="768" alt="">
+          <img class="density-star density-star-copy" src="./assets/images/density-star.png" width="768" height="768" alt="">
+          <img class="density-star density-star-copy" src="./assets/images/density-star.png" width="768" height="768" alt="">
+          <img class="density-star density-star-copy" src="./assets/images/density-star.png" width="768" height="768" alt="">
+          <img class="density-star density-star-copy" src="./assets/images/density-star.png" width="768" height="768" alt="">
+        </div>
+        <img class="density-star density-star-source" src="./assets/images/density-star.png" width="768" height="768" alt="不完全对称的粉红色五角星点云">
+      </div>
+      <img class="density-star-equation" src="./assets/images/group-average.svg"
+           alt="I_sym = 1/|𝒢| Σ_(g∈𝒢) g ⋅ I">
+      <template data-animation-step data-symmetrize-star></template>
+    </section>
+
+    <section class="slide flow-matching-slide" aria-label="Slide 8" hidden>
+      <video class="flow-matching-video" data-source="./assets/videos/flow-matching-spinning-top.mp4"
+             preload="auto" playsinline muted aria-label="流匹配中的速度对称化动画"></video>
+      <template data-animation-step data-play-flow-matching></template>
+    </section>
+
+    <section class="slide" aria-label="Slide 9" hidden>
+      <h2 class="slide-heading">But wait, how do we rotate a latent?</h2>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="Random noise">
+          <use href="./assets/images/trellis-pipeline.svg#random-noise" x="186" y="170" width="268" height="268"/>
+          <text x="320" y="480">Random noise 16³</text>
+        </svg>
+      </div>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="Sparse structure latent">
+          <g class="trellis-connector" transform="translate(500 304)">
+            <text x="140" y="-24">Flow gen</text>
+            <path d="M0 0H280 M259 -11L280 0L259 11"/>
+          </g>
+          <use href="./assets/images/trellis-pipeline.svg#structure-latent" x="826" y="170" width="268" height="268"/>
+          <text x="960" y="480">Sparse structure latent</text>
+          <text class="trellis-dimension" x="960" y="522">8 dim</text>
+        </svg>
+      </div>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="Active voxel">
+          <g class="trellis-connector" transform="translate(1140 304)">
+            <text x="140" y="-24">Decode</text>
+            <path d="M0 0H280 M259 -11L280 0L259 11"/>
+          </g>
+          <use href="./assets/images/trellis-pipeline.svg#active-voxel" x="1466" y="170" width="268" height="268"/>
+          <text x="1600" y="480">Active voxel 64³</text>
+        </svg>
+      </div>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="Sparse random noise">
+          <use href="./assets/images/trellis-pipeline.svg#sparse-noise" x="186" y="570" width="268" height="268"/>
+          <text x="320" y="880">Sparse random noise 64³</text>
+        </svg>
+      </div>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="Shape latent">
+          <g class="trellis-connector" transform="translate(500 704)">
+            <text x="140" y="-24">Flow gen</text>
+            <path d="M0 0H280 M259 -11L280 0L259 11"/>
+          </g>
+          <use href="./assets/images/trellis-pipeline.svg#shape-latent" x="826" y="570" width="268" height="268"/>
+          <text x="960" y="880">Shape latent 64³</text>
+          <text class="trellis-dimension" x="960" y="922">32 dim</text>
+        </svg>
+      </div>
+      <div class="trellis-pipeline-step" data-animation-step hidden>
+        <svg viewBox="0 0 1920 1080" aria-label="O-voxel feature">
+          <g class="trellis-connector" transform="translate(1140 704)">
+            <text x="140" y="-24">Decode</text>
+            <path d="M0 0H280 M259 -11L280 0L259 11"/>
+          </g>
+          <use href="./assets/images/trellis-pipeline.svg#ovoxel-feature" x="1466" y="570" width="268" height="268"/>
+          <text x="1600" y="880">O-voxel feature 1024³</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 10" hidden>
+      <h2 class="slide-heading">But wait, how do we rotate a latent?</h2>
+      <ul class="latent-rotation-list">
+        <li>Scalar, <img class="latent-rotation-formula" src="./assets/images/scalar-rotation-rule.svg" alt="X_rot = X">
+          <ul><li>Air pressure, voltage</li></ul>
+        </li>
+        <li>Vector, <img class="latent-rotation-formula" src="./assets/images/vector-rotation-rule.svg" alt="X_rot = RX">
+          <ul><li>Velocity, angular momentum</li></ul>
+        </li>
+        <li>Tensor, <img class="latent-rotation-formula" src="./assets/images/tensor-rotation-rule.svg" alt="X_rot = RXR transpose">
+          <ul><li>Stress tensor, electromagnetic field</li></ul>
+        </li>
+      </ul>
+      <p class="latent-rotation-conclusion">We don't know the transformation law for latents!</p>
+    </section>
+
+    <section class="slide" aria-label="Slide 11" hidden>
+      <h2 class="slide-heading">If we naïvely use the nearest neighbor...</h2>
+      <div class="dragon-comparison">
+        <div class="dragon-comparison-columns">
+          <span>Original pose</span>
+          <span>Rotated pose</span>
+          <span>Nearest neighbor</span>
+        </div>
+        <div class="dragon-comparison-rows">
+          <span>Active voxel</span>
+          <span>Shape latent</span>
+        </div>
+        <canvas class="dragon-comparison-views" aria-label="龙模型原始姿态、旋转姿态和最近邻比较"></canvas>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 12" hidden>
+      <h2 class="slide-heading">And our solution is ...</h2>
+      <ul class="solution-rotation-list">
+        <li><span>Scalar,</span><img class="latent-rotation-formula" src="./assets/images/scalar-rotation-aligned.svg" alt="X_rot = X"></li>
+        <li><span>Vector,</span><img class="latent-rotation-formula" src="./assets/images/vector-rotation-aligned.svg" alt="X_rot = RX"></li>
+        <li><span>Tensor,</span><img class="latent-rotation-formula" src="./assets/images/tensor-rotation-aligned.svg" alt="X_rot = RXR transpose"></li>
+      </ul>
+      <div class="solution-variable-highlights" data-animation-step hidden aria-hidden="true">
+        <div class="solution-rotated-frame"></div>
+        <div class="solution-original-frame"></div>
+      </div>
+      <div class="solution-linear-assumption" data-animation-step hidden>
+        <p>We can assume that for structured latents, the transformation law is also linear,</p>
+        <img src="./assets/images/linear-latent-rule.svg" alt="X_rot = W(·) X">
+      </div>
+    </section>
+
+    <section class="slide mapper-intro-slide" aria-label="Slide 13" hidden>
+      <canvas class="mapper-intro-view" aria-label="陀螺旋臂局部特征演示"></canvas>
+      <template data-animation-step data-highlight-mapper-region></template>
+      <template data-animation-step data-split-mapper-poses></template>
+      <template data-animation-step data-voxelize-mapper-poses></template>
+      <template data-animation-step data-align-mapper-voxels></template>
+      <template data-animation-step data-zoom-mapper-voxels></template>
+      <template data-animation-step data-reveal-mapper-skeleton></template>
+      <template data-animation-step data-select-mapper-neighborhood></template>
+      <template data-animation-step data-merge-mapper-neighborhood></template>
+      <div class="mapper-neighborhood-equations" data-animation-step hidden>
+        <img src="./assets/images/mapper-neighborhood-equations.svg"
+             alt="蓝色体素的特征是红色邻域特征的加权变换之和；权重与变换系数由空间变换神经网络输出">
+        <span class="mapper-equation-symbol" aria-hidden="true"></span>
+      </div>
+      <p class="mapper-method-name" data-animation-step hidden>Spatial-Transform Latent Mapper</p>
+    </section>
+
+    <section class="slide" aria-label="Slide 14" hidden>
+      <h2 class="slide-heading">Training</h2>
+      <ul class="training-list">
+        <li>We trained our mapper on encoded latent pairs on objaverse-XL dataset.
+          <ul><li>no symmetric dataset needed</li></ul>
+        </li>
+        <li>The benefit of linear assumption,
+          <ul>
+            <li>latent agnostic, mapper trained on <img class="training-inline-math" src="./assets/images/training-x-endpoint.svg" alt="x_(t=1)">, but can be applied to <img class="training-inline-math" src="./assets/images/training-x-time.svg" alt="x_t"> at any <img class="training-inline-math" src="./assets/images/training-time.svg" alt="t">, and velocity.</li>
+            <li>no need to retrain the VAE or generative flow model.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide" aria-label="Slide 15" hidden>
+      <div class="dragon-comparison dragon-mapper-comparison">
+        <div class="dragon-comparison-columns">
+          <span>Nearest neighbor</span>
+          <span>Mapper</span>
+        </div>
+        <div class="dragon-comparison-rows">
+          <span>Active voxel</span>
+          <span>Shape latent</span>
+        </div>
+        <canvas class="dragon-comparison-views" data-mapper-comparison aria-label="最近邻与 Mapper 的龙模型比较"></canvas>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 16" hidden>
+      <h2 class="slide-heading">Visuals</h2>
+      <canvas class="visuals-gallery-views" aria-label="八个 SymTRELLIS 模型按各自对称阶旋转"></canvas>
+    </section>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll(".slide"), (element, index) => ({
+        element,
+        pageNumber: index + 1,
+        steps: Array.from(element.querySelectorAll("[data-animation-step]")),
+      }));
+
+      // 每页先显示初始状态，然后按页面顺序逐步显示标记的内容。
+      const states = slides.flatMap((slide) =>
+        Array.from({ length: slide.steps.length + 1 }, (_, stepCount) => ({ slide, stepCount }))
+      );
+      slides.forEach(({ element, pageNumber }) => {
+        if (!element.classList.contains("title-slide")) {
+          element.dataset.pageNumber = `${pageNumber}/${slides.length}`;
+        }
+      });
+
+      function firstStateFromUrl() {
+        const page = new URL(location.href).searchParams.get("page");
+        if (!page || !/^\d+$/.test(page)) return 0;
+        const index = states.findIndex(({ slide, stepCount }) =>
+          slide.pageNumber === Number(page) && stepCount === 0
+        );
+        return index < 0 ? 0 : index;
+      }
+
+      let currentState = firstStateFromUrl();
+
+      const comparison = document.querySelector(".video-comparison");
+      const comparisonVideos = Array.from(comparison.querySelectorAll("video"));
+      const comparisonSlide = comparison.closest(".slide");
+      const comparisonControls = comparison.querySelector(".comparison-controls");
+      const comparisonToggle = comparison.querySelector(".comparison-toggle");
+      const comparisonProgress = comparison.querySelector(".comparison-progress");
+      const comparisonStep = document.querySelector("[data-play-comparison]");
+      let timelineVideo = null;
+      let playbackRequested = false;
+      let pendingPlayback = null;
+      const spinningTopCanvas = document.querySelector(".spinning-top-views");
+      const spinningTopSlide = spinningTopCanvas.closest(".slide");
+      let spinningTopScene = null;
+      let spinningTopLoading = null;
+      const shapeGalleryCanvas = document.querySelector(".shape-gallery-views");
+      const shapeGallerySlide = shapeGalleryCanvas.closest(".slide");
+      let shapeGalleryScene = null;
+      let shapeGalleryLoading = null;
+      const visualsGalleryCanvas = document.querySelector(".visuals-gallery-views");
+      const visualsGallerySlide = visualsGalleryCanvas.closest(".slide");
+      let visualsGalleryScene = null;
+      let visualsGalleryLoading = null;
+      const sectorGearCanvas = document.querySelector(".sector-gear-view");
+      const sectorGearSlide = sectorGearCanvas.closest(".slide");
+      let sectorGearScene = null;
+      let sectorGearLoading = null;
+      const dragonComparisons = Array.from(document.querySelectorAll(".dragon-comparison-views"), (canvas) => ({
+        canvas, slide: canvas.closest(".slide"), scene: null, loading: null,
+      }));
+      const mapperIntroCanvas = document.querySelector(".mapper-intro-view");
+      const mapperIntroSlide = mapperIntroCanvas.closest(".slide");
+      let mapperIntroScene = null;
+      let mapperIntroLoading = null;
+      let mapperIntroStage = 0;
+      const densityStarSource = document.querySelector(".density-star-source");
+      const densityStarCopies = Array.from(document.querySelectorAll(".density-star-copy"));
+      const densityStarEquation = document.querySelector(".density-star-equation");
+      const densityStarSlide = densityStarSource.closest(".slide");
+      const densityStarStep = document.querySelector("[data-symmetrize-star]");
+      let densityStarAnimations = [];
+      const flowMatchingVideo = document.querySelector(".flow-matching-video");
+      const flowMatchingSlide = flowMatchingVideo.closest(".slide");
+      const flowMatchingStep = document.querySelector("[data-play-flow-matching]");
+      let flowMatchingRequested = false;
+      const flowMatchingReady = loadComparisonVideo(flowMatchingVideo);
+
+      function updateFlowMatchingVideo(active) {
+        if (active === flowMatchingRequested) return;
+        flowMatchingRequested = active;
+        if (!active) {
+          flowMatchingVideo.pause();
+          if (flowMatchingVideo.currentTime !== 0) flowMatchingVideo.currentTime = 0;
+          return;
+        }
+        void flowMatchingReady.then(() => {
+          if (flowMatchingRequested) return flowMatchingVideo.play();
+        }).catch((error) => {
+          if (flowMatchingRequested && error.name !== "AbortError") {
+            console.error("无法播放流匹配动画", error);
+          }
+        });
+      }
+
+      function updateDensityStar(active) {
+        if (!active) {
+          densityStarAnimations.forEach((animation) => animation.cancel());
+          densityStarAnimations = [];
+          return;
+        }
+        if (densityStarAnimations.length) return;
+
+        const moveDuration = 600;
+        const rotationDuration = 600;
+        const copyDuration = 500;
+        const turnDuration = rotationDuration + copyDuration;
+        const totalDuration = moveDuration + densityStarCopies.length * turnDuration;
+        const ease = "cubic-bezier(0.65, 0, 0.35, 1)";
+        const pose = (x, angle) => `translate(-50%, -50%) translateX(${x}cqw) rotate(${angle}deg)`;
+        const sourceFrames = [
+          { transform: pose(0, 0), offset: 0, easing: ease },
+          { transform: pose(-25, 0), offset: moveDuration / totalDuration, easing: ease },
+        ];
+
+        densityStarCopies.forEach((copy, index) => {
+          const angle = 72 * (index + 1);
+          const turnStart = moveDuration + index * turnDuration;
+          const copyStart = turnStart + rotationDuration;
+          const copyEnd = turnStart + turnDuration;
+
+          sourceFrames.push(
+            { transform: pose(-25, angle), offset: copyStart / totalDuration },
+            { transform: pose(-25, angle), offset: copyEnd / totalDuration, easing: ease },
+          );
+
+          densityStarAnimations.push(copy.animate([
+            { transform: pose(-25, angle), opacity: 0.2 },
+            { transform: pose(25, angle), opacity: 0.2 },
+          ], { delay: copyStart, duration: copyDuration, easing: ease, fill: "forwards" }));
+        });
+
+        densityStarAnimations.push(densityStarSource.animate(sourceFrames, {
+          duration: totalDuration, fill: "forwards",
+        }));
+        densityStarAnimations.push(densityStarEquation.animate([
+          { opacity: 0 }, { opacity: 1 },
+        ], { delay: totalDuration, duration: 350, easing: "ease-out", fill: "forwards" }));
+        const startTime = document.timeline.currentTime;
+        densityStarAnimations.forEach((animation) => { animation.startTime = startTime; });
+      }
+
+      function updateSectorGear(active) {
+        if (!active) {
+          sectorGearScene?.stop();
+          return;
+        }
+        if (sectorGearScene) {
+          sectorGearScene.start();
+          return;
+        }
+        if (!sectorGearLoading) {
+          sectorGearLoading = import("./js/scenes/sector-gear.js")
+            .then(({ createSectorGearScene }) => createSectorGearScene(sectorGearCanvas))
+            .then((scene) => {
+              sectorGearScene = scene;
+              if (!sectorGearSlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载 Sector Replication 齿轮", error))
+            .finally(() => { sectorGearLoading = null; });
+        }
+      }
+
+      function updateDragonComparison(activeSlide) {
+        dragonComparisons.forEach((comparison) => {
+          if (comparison.slide !== activeSlide) {
+            comparison.scene?.stop();
+            return;
+          }
+          if (comparison.scene) {
+            comparison.scene.start();
+            return;
+          }
+          if (!comparison.loading) {
+            comparison.loading = import("./js/scenes/dragon-comparison.js?v=shared-zoom-return")
+              .then(({ createDragonComparison }) => createDragonComparison(comparison.canvas))
+              .then((scene) => {
+                comparison.scene = scene;
+                if (!comparison.slide.hidden) scene.start();
+              })
+              .catch((error) => console.error("无法加载龙模型对比", error))
+              .finally(() => { comparison.loading = null; });
+          }
+        });
+      }
+
+      function updateMapperIntro(active, stage) {
+        mapperIntroStage = stage;
+        if (!active) {
+          mapperIntroScene?.stop();
+          return;
+        }
+        if (mapperIntroScene) {
+          mapperIntroScene.start(stage);
+          return;
+        }
+        if (!mapperIntroLoading) {
+          mapperIntroLoading = import("./js/scenes/mapper-intro.js")
+            .then(({ createMapperIntro }) => createMapperIntro(mapperIntroCanvas))
+            .then((scene) => {
+              mapperIntroScene = scene;
+              if (!mapperIntroSlide.hidden) scene.start(mapperIntroStage);
+            })
+            .catch((error) => console.error("无法加载陀螺局部特征演示", error))
+            .finally(() => { mapperIntroLoading = null; });
+        }
+      }
+
+      function updateShapeGallery(active) {
+        if (!active) {
+          shapeGalleryScene?.stop();
+          return;
+        }
+        if (shapeGalleryScene) {
+          shapeGalleryScene.start();
+          return;
+        }
+        if (!shapeGalleryLoading) {
+          shapeGalleryLoading = import("./js/scenes/shape-gallery.js?v=compressed-pbr-final")
+            .then(({ createShapeGallery }) => createShapeGallery(shapeGalleryCanvas))
+            .then((scene) => {
+              shapeGalleryScene = scene;
+              if (!shapeGallerySlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载四组模型", error))
+            .finally(() => { shapeGalleryLoading = null; });
+        }
+      }
+
+      function updateVisualsGallery(active) {
+        if (!active) {
+          visualsGalleryScene?.stop();
+          return;
+        }
+        if (visualsGalleryScene) {
+          visualsGalleryScene.start();
+          return;
+        }
+        if (!visualsGalleryLoading) {
+          visualsGalleryLoading = import("./js/scenes/visuals-gallery.js?v=1")
+            .then(({ createVisualsGallery }) => createVisualsGallery(visualsGalleryCanvas))
+            .then((scene) => {
+              visualsGalleryScene = scene;
+              if (!visualsGallerySlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载 Visuals 模型", error))
+            .finally(() => { visualsGalleryLoading = null; });
+        }
+      }
+
+      function updateSpinningTopScene(active) {
+        if (!active) {
+          spinningTopScene?.stop();
+          return;
+        }
+        if (spinningTopScene) {
+          spinningTopScene.start();
+          return;
+        }
+        if (!spinningTopLoading) {
+          spinningTopLoading = import("./js/scenes/spinning-top.js")
+            .then(({ createSpinningTopScene }) => createSpinningTopScene(spinningTopCanvas))
+            .then((scene) => {
+              spinningTopScene = scene;
+              if (!spinningTopSlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载陀螺三维展示", error))
+            .finally(() => { spinningTopLoading = null; });
+        }
+      }
+
+      async function loadComparisonVideo(video) {
+        const source = new URL(video.dataset.source, document.baseURI);
+        if (source.protocol === "http:" || source.protocol === "https:") {
+          try {
+            const response = await fetch(source, { headers: { Range: "bytes=0-0" } });
+            if (response.status === 200) {
+              // 本地预览若直接返回整段视频，就用完整数据供浏览器跳转。
+              video.src = URL.createObjectURL(await response.blob());
+              return;
+            }
+            await response.body?.cancel();
+          } catch {
+            // 如果探测请求失败，仍让视频元素尝试直接读取素材。
+          }
+        }
+        video.src = source.href;
+      }
+
+      function includesComparison({ slide, stepCount }) {
+        const stepIndex = slide.steps.indexOf(comparisonStep);
+        return stepIndex >= 0 && stepIndex < stepCount;
+      }
+
+      function updateComparisonControls() {
+        comparisonToggle.classList.toggle("is-playing", playbackRequested);
+        comparisonToggle.setAttribute("aria-label", playbackRequested ? "暂停两段视频" : "播放两段视频");
+        if (timelineVideo) comparisonProgress.value = timelineVideo.currentTime;
+      }
+
+      function chooseTimelineVideo() {
+        if (!comparisonVideos.every((video) => Number.isFinite(video.duration))) return;
+        timelineVideo = comparisonVideos.reduce((longer, video) =>
+          video.duration > longer.duration ? video : longer
+        );
+        comparisonProgress.max = timelineVideo.duration;
+        comparisonProgress.disabled = false;
+        updateComparisonControls();
+      }
+
+      function pauseComparison() {
+        playbackRequested = false;
+        pendingPlayback?.abort();
+        pendingPlayback = null;
+        comparisonVideos.forEach((video) => video.pause());
+        updateComparisonControls();
+      }
+
+      function setComparisonTime(time) {
+        comparisonVideos.forEach((video) => {
+          if (!Number.isFinite(video.duration)) return;
+          const target = Math.min(time, video.duration);
+          if (target === video.duration) video.pause();
+          if (Math.abs(video.currentTime - target) > 0.001) video.currentTime = target;
+        });
+        updateComparisonControls();
+      }
+
+      function resetComparison() {
+        pauseComparison();
+        setComparisonTime(0);
+      }
+
+      function waitUntilPlayable(video, signal) {
+        if (video.error) return Promise.reject(video.error);
+        if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return Promise.resolve();
+
+        return new Promise((resolve, reject) => {
+          function checkReady() {
+            if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) resolve();
+          }
+          video.addEventListener("canplay", checkReady, { signal });
+          video.addEventListener("seeked", checkReady, { signal });
+          video.addEventListener("error", () => reject(video.error), { once: true, signal });
+          signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+        });
+      }
+
+      async function playComparison() {
+        if (playbackRequested) return;
+        if (timelineVideo) setComparisonTime(timelineVideo.currentTime);
+        const videosToPlay = comparisonVideos.filter((video) =>
+          !Number.isFinite(video.duration) || video.currentTime < video.duration
+        );
+        if (!videosToPlay.length) return;
+
+        playbackRequested = true;
+        updateComparisonControls();
+        const request = new AbortController();
+        pendingPlayback = request;
+        try {
+          if (videosToPlay.some((video) => video.seeking || video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA)) {
+            await Promise.all(videosToPlay.map((video) => waitUntilPlayable(video, request.signal)));
+          }
+          if (request.signal.aborted) return;
+          await Promise.all(videosToPlay.map((video) => video.play()));
+        } catch (error) {
+          if (!request.signal.aborted) {
+            pauseComparison();
+            console.error("无法同时播放两段陀螺视频", error);
+          }
+        } finally {
+          if (pendingPlayback === request) pendingPlayback = null;
+          request.abort();
+        }
+      }
+
+      comparisonToggle.addEventListener("click", () => {
+        if (playbackRequested) {
+          pauseComparison();
+          return;
+        }
+        if (timelineVideo && timelineVideo.currentTime >= timelineVideo.duration) setComparisonTime(0);
+        void playComparison();
+      });
+
+      comparisonProgress.addEventListener("input", () => {
+        if (!timelineVideo) return;
+        const time = comparisonProgress.valueAsNumber;
+        const resume = playbackRequested && time < timelineVideo.duration;
+        pauseComparison();
+        setComparisonTime(time);
+        if (resume) void playComparison();
+      });
+
+      comparisonVideos.forEach((video) => {
+        video.addEventListener("loadedmetadata", chooseTimelineVideo);
+        video.addEventListener("durationchange", chooseTimelineVideo);
+        video.addEventListener("timeupdate", () => {
+          if (video === timelineVideo) comparisonProgress.value = video.currentTime;
+        });
+        video.addEventListener("ended", () => {
+          if (video === timelineVideo && video.ended) pauseComparison();
+        });
+        void loadComparisonVideo(video);
+      });
+      chooseTimelineVideo();
+
+      comparison.addEventListener("pointerleave", () => {
+        const focused = document.activeElement;
+        if (comparisonControls.contains(focused)) focused.blur();
+      });
+
+      function showState({ slide, stepCount }) {
+        slides.forEach((page) => {
+          page.element.hidden = page !== slide;
+        });
+        slide.steps.forEach((step, index) => {
+          step.hidden = index >= stepCount;
+        });
+        updateSpinningTopScene(slide.element === spinningTopSlide);
+        updateShapeGallery(slide.element === shapeGallerySlide);
+        updateVisualsGallery(slide.element === visualsGallerySlide);
+        updateSectorGear(slide.element === sectorGearSlide);
+        updateDragonComparison(slide.element);
+        updateMapperIntro(slide.element === mapperIntroSlide, slide.element === mapperIntroSlide ? stepCount : 0);
+        updateDensityStar(slide.element === densityStarSlide && !densityStarStep.hidden);
+        updateFlowMatchingVideo(slide.element === flowMatchingSlide && !flowMatchingStep.hidden);
+      }
+
+      showState(states[currentState]);
+
+      function updatePageUrl(pageNumber) {
+        const url = new URL(location.href);
+        url.searchParams.set("page", String(pageNumber));
+        history.replaceState(history.state, "", url);
+      }
+
+      window.addEventListener("popstate", () => {
+        resetComparison();
+        currentState = firstStateFromUrl();
+        showState(states[currentState]);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.target === comparisonProgress || (event.target === comparisonToggle && event.code === "Space")) return;
+        const forward = event.code === "Space" || event.code === "ArrowRight";
+        const backward = event.code === "ArrowLeft";
+        if ((!forward && !backward) || event.altKey || event.ctrlKey || event.metaKey) return;
+        event.preventDefault();
+        if (event.repeat) return;
+
+        const nextIndex = currentState + (forward ? 1 : -1);
+        if (nextIndex < 0 || nextIndex >= states.length) return;
+
+        const previous = states[currentState];
+        const next = states[nextIndex];
+        const wasPlaybackStep = includesComparison(previous);
+        const isPlaybackStep = includesComparison(next);
+        const leavingComparison = previous.slide.element === comparisonSlide && next.slide !== previous.slide;
+        if (leavingComparison || (wasPlaybackStep && !isPlaybackStep)) resetComparison();
+
+        currentState = nextIndex;
+        showState(next);
+        if (previous.slide !== next.slide) updatePageUrl(next.slide.pageNumber);
+        if (forward && previous.slide === next.slide && !wasPlaybackStep && isPlaybackStep) {
+          void playComparison();
+        }
+      });
+    </script>
+  </body>
+</html>

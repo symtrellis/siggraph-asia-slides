@@ -1,0 +1,670 @@
+@font-face {
+  font-family: "Linux Libertine";
+  src: url("./assets/fonts/LinLibertine_R.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  src: url("./assets/fonts/LinBiolinum_R.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #141414;
+  --text: #f1eeea;
+  --sfu-header-red: #a6192e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  min-height: 100dvh;
+  margin: 0;
+  place-items: center;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--text);
+}
+
+.slide {
+  position: relative;
+  display: grid;
+  width: min(100vw, 177.7778dvh);
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.slide[hidden],
+[data-animation-step][hidden] {
+  display: none;
+}
+
+.title-slide {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.slide:not(.title-slide)::after {
+  content: "";
+  position: absolute;
+  right: 2cqw;
+  bottom: 2cqw;
+  width: 8cqw;
+  aspect-ratio: 2 / 1;
+  background: url("./assets/images/SFU_block_colour_rgb.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+
+.slide:not(.title-slide)::before {
+  content: attr(data-page-number);
+  position: absolute;
+  left: 2cqw;
+  bottom: 2cqw;
+  color: var(--text);
+  font: 400 1.15cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+  pointer-events: none;
+}
+
+.centered-question {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: max-content;
+  max-inline-size: 90%;
+  margin: 0;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  font: 400 3.5cqw / 1.15 "Linux Libertine", Georgia, serif;
+}
+
+.video-comparison {
+  position: relative;
+  display: grid;
+  width: 82cqw;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4cqw;
+  place-self: center;
+}
+
+.video-comparison video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.comparison-controls {
+  position: absolute;
+  inset-inline: 1cqw;
+  bottom: 1cqw;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1cqw;
+  padding: 0.35cqw 0.8cqw;
+  border-radius: 0.35cqw;
+  background: rgb(20 20 20 / 88%);
+  visibility: hidden;
+}
+
+.video-comparison:hover .comparison-controls {
+  visibility: visible;
+}
+
+.comparison-toggle {
+  display: grid;
+  place-items: center;
+  width: max(32px, 2.4cqw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.comparison-toggle::before {
+  content: "";
+  border-block: max(6px, 0.42cqw) solid transparent;
+  border-left: max(10px, 0.65cqw) solid currentColor;
+}
+
+.comparison-toggle.is-playing::before {
+  width: max(10px, 0.7cqw);
+  height: max(12px, 0.82cqw);
+  border: 0;
+  border-inline: max(3px, 0.23cqw) solid currentColor;
+}
+
+.comparison-progress {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  accent-color: var(--text);
+  cursor: pointer;
+}
+
+.spinning-top-gallery {
+  position: absolute;
+  inset: 1.5cqw 12cqw 5.8cqw;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.6cqw;
+}
+
+.spinning-top-views {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.spinning-top-views:active {
+  cursor: grabbing;
+}
+
+.spinning-top-names {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  text-align: center;
+  font: 400 2.05cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.shape-gallery {
+  position: absolute;
+  inset: 2cqw 2cqw 5.8cqw;
+  display: grid;
+  grid-template-columns: 4.1cqw minmax(0, 1fr);
+}
+
+.shape-gallery-labels {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  font: 400 1.8cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.shape-gallery-labels span {
+  place-self: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.shape-gallery-views {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.shape-gallery-views:active {
+  cursor: grabbing;
+}
+
+.visuals-gallery-views {
+  position: absolute;
+  inset: 8.2cqw 2cqw 5.8cqw;
+  display: block;
+  width: calc(100% - 4cqw);
+  height: calc(100% - 14cqw);
+  cursor: grab;
+  touch-action: none;
+}
+
+.visuals-gallery-views:active {
+  cursor: grabbing;
+}
+
+.sector-gear-view {
+  position: absolute;
+  inset: 1.5cqw 20cqw 10cqw;
+  display: block;
+  width: 60cqw;
+  height: calc(100% - 11.5cqw);
+  cursor: grab;
+  touch-action: none;
+}
+
+.sector-gear-view:active {
+  cursor: grabbing;
+}
+
+.sector-gear-caption {
+  position: absolute;
+  inset-inline: 6cqw;
+  bottom: 6.3cqw;
+  margin: 0;
+  text-align: center;
+  font: 400 2.35cqw / 1.2 "Linux Libertine", Georgia, serif;
+}
+
+.slide-heading {
+  position: absolute;
+  top: 3.2cqw;
+  left: 4.5cqw;
+  margin: 0;
+  font: 400 3.5cqw / 1.15 "Linux Libertine", Georgia, serif;
+}
+
+.slide-heading-right {
+  left: auto;
+  right: 4.5cqw;
+  text-align: right;
+}
+
+.density-star-demo,
+.density-star-copies {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.density-star-copies {
+  isolation: isolate;
+}
+
+.density-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 34cqw;
+  height: auto;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.density-star-copy {
+  opacity: 0;
+  mix-blend-mode: plus-lighter;
+}
+
+.density-star-equation {
+  position: absolute;
+  left: 50%;
+  top: 82.5%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 21cqw;
+  height: auto;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flow-matching-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.flow-matching-slide::before,
+.flow-matching-slide::after {
+  z-index: 1;
+}
+
+.trellis-pipeline-step {
+  position: absolute;
+  inset: 0;
+  transform: translateY(0.9cqw);
+  pointer-events: none;
+}
+
+.trellis-pipeline-step:not([hidden]) {
+  animation: trellis-step-in 0.28s ease-out both;
+}
+
+@keyframes trellis-step-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.trellis-pipeline-step svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: var(--text);
+  font: 400 37px "Linux Biolinum", Arial, sans-serif;
+  text-anchor: middle;
+}
+
+.trellis-connector {
+  font-size: 33px;
+}
+
+.trellis-connector path {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trellis-dimension {
+  font-size: 32px;
+  fill: #c9cbd0;
+}
+
+.latent-rotation-list {
+  position: absolute;
+  inset: 9.8cqw 8cqw auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+  margin: 0;
+  padding-left: 2.2cqw;
+  font: 400 3cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.latent-rotation-list > li {
+  padding-left: 0.5cqw;
+}
+
+.latent-rotation-list ul {
+  margin: 0.3cqw 0 0;
+  padding-left: 2.6cqw;
+  font-size: 2.35cqw;
+}
+
+.latent-rotation-formula {
+  width: auto;
+  height: 4.2cqw;
+  vertical-align: -1.05cqw;
+  margin-left: 0.55cqw;
+}
+
+.latent-rotation-conclusion {
+  position: absolute;
+  left: 10.7cqw;
+  right: 8cqw;
+  top: 43cqw;
+  margin: 0;
+  font: 400 3cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.solution-rotation-list {
+  position: absolute;
+  inset: 11cqw 8cqw auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4cqw;
+  margin: 0;
+  padding-left: 2.2cqw;
+  font: 400 3cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.solution-rotation-list li {
+  padding-left: 0.5cqw;
+}
+
+.solution-rotation-list li span {
+  display: inline-block;
+  width: 9cqw;
+}
+
+.solution-variable-highlights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.solution-variable-highlights:not([hidden]) {
+  animation: solution-frames-in 0.35s ease-out both;
+}
+
+@keyframes solution-frames-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.solution-rotated-frame,
+.solution-original-frame {
+  position: absolute;
+  top: 11.7cqw;
+  height: 12.35cqw;
+  border: 0.14cqw solid;
+  border-radius: 0.55cqw;
+}
+
+.solution-rotated-frame {
+  left: 19.85cqw;
+  width: 4.8cqw;
+  border-color: #4ba8ee;
+}
+
+.solution-original-frame {
+  left: 29.2cqw;
+  width: 2.4cqw;
+  border-color: #f05a64;
+}
+
+.solution-linear-assumption {
+  position: absolute;
+  inset: 31cqw 8cqw auto 10.7cqw;
+  font: 400 2.45cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.solution-linear-assumption:not([hidden]) {
+  animation: solution-frames-in 0.35s ease-out both;
+}
+
+.solution-linear-assumption p {
+  margin: 0;
+}
+
+.solution-linear-assumption img {
+  display: block;
+  width: auto;
+  height: 5cqw;
+  margin: 1.7cqw auto 0;
+}
+
+.dragon-comparison {
+  position: absolute;
+  inset: 8.2cqw 5cqw 6cqw;
+  display: grid;
+  grid-template: 3cqw minmax(0, 1fr) / 4.5cqw minmax(0, 1fr);
+}
+
+.dragon-comparison-columns {
+  grid-area: 1 / 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  text-align: center;
+  font: 400 2.1cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.dragon-comparison-rows {
+  grid-area: 2 / 1;
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  font: 400 1.9cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.dragon-comparison-rows span {
+  place-self: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.dragon-comparison-views {
+  grid-area: 2 / 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.dragon-comparison-views:active {
+  cursor: grabbing;
+}
+
+.dragon-mapper-comparison {
+  inset: 1.7cqw 13cqw 2.7cqw;
+}
+
+.dragon-mapper-comparison .dragon-comparison-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mapper-intro-view {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mapper-intro-slide::before,
+.mapper-intro-slide::after {
+  z-index: 1;
+}
+
+.mapper-intro-slide {
+  --mapper-green: #96cd79;
+}
+
+.mapper-neighborhood-equations {
+  position: absolute;
+  left: 52.5cqw;
+  right: 3.2cqw;
+  top: 47.5%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.mapper-neighborhood-equations:not([hidden]) {
+  animation: solution-frames-in 0.35s ease-out both;
+}
+
+.mapper-neighborhood-equations img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mapper-equation-symbol {
+  position: absolute;
+  inset: 0;
+  background-color: var(--text);
+  mask: url("./assets/images/mapper-symbol-mask.svg") center / 100% 100% no-repeat;
+  transition: background-color 0.35s ease-out;
+}
+
+.mapper-intro-slide:has(.mapper-method-name:not([hidden])) .mapper-equation-symbol {
+  background-color: var(--mapper-green);
+}
+
+.mapper-method-name {
+  position: absolute;
+  left: 52.5cqw;
+  right: 3.2cqw;
+  top: 68.8%;
+  margin: 0;
+  color: var(--mapper-green);
+  text-align: center;
+  font: 400 2.6cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.mapper-method-name:not([hidden]) {
+  animation: solution-frames-in 0.35s ease-out both;
+}
+
+.training-list {
+  position: absolute;
+  inset: 13cqw 7.2cqw auto 8cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 5cqw;
+  margin: 0;
+  padding-left: 2.2cqw;
+  font: 400 2.65cqw / 1.25 "Linux Biolinum", Arial, sans-serif;
+}
+
+.training-list > li {
+  padding-left: 0.5cqw;
+}
+
+.training-list ul {
+  margin: 0.65cqw 0 0;
+  padding-left: 2.6cqw;
+  font-size: 2.35cqw;
+}
+
+.training-list ul li + li {
+  margin-top: 0.6cqw;
+}
+
+.training-inline-math {
+  width: auto;
+  height: 3.3cqw;
+  vertical-align: -0.707cqw;
+}
+
+.sfu-header {
+  height: 5.6cqw;
+  background: var(--sfu-header-red);
+}
+
+.sfu-logo {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+
+.title-content {
+  display: grid;
+  min-height: 0;
+  place-items: center;
+}
+
+.title-block {
+  width: 74cqw;
+  padding: 3.3cqw 3cqw 3.6cqw;
+  text-align: center;
+}
+
+.title-block h1 {
+  margin: 0;
+  font-family: "Linux Libertine", Georgia, serif;
+  font-weight: 400;
+}
+
+.paper-name {
+  display: block;
+  font-size: 5.15cqw;
+  line-height: 0.98;
+}
+
+.paper-description {
+  display: block;
+  margin-top: 0.9cqw;
+  font-size: 3.55cqw;
+  line-height: 1.08;
+}
+
+.authors {
+  margin: 2.4cqw 0 0;
+  font: 400 2cqw / 1.25 "Linux Biolinum", Arial, sans-serif;
+}

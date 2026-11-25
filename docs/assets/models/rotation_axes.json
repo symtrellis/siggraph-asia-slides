@@ -1,0 +1,110 @@
+{
+  "algorithm": "SymTRELLIS icp_refine_rotation, initialized at the independently estimated shaft axis; exact 120-degree rotation validated separately.",
+  "fold": 3,
+  "render_angle_degrees": 120.0,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "models": {
+    "trellis2": {
+      "source": "spinning_top_vanilla_rescaled.stl",
+      "source_sha256": "e8a690e3054d80119f15ebabad5c02fdff3ade08221990f1a075d80f1708d761",
+      "axis_direction": [
+        -0.0006820143898949027,
+        0.0003601331845857203,
+        0.9999997615814209
+      ],
+      "axis_point_at_z0": [
+        -0.012572201900184155,
+        0.07664351910352707,
+        0.0
+      ],
+      "tilt_from_z_degrees": 0.03956468030810356,
+      "angle_to_shaft_axis_degrees": 0.1170339286327362,
+      "shaft_axis_initial": {
+        "method": "Least-squares line through 9 narrow upper/lower shaft sections; each XY section center uses the midpoint of its 1st and 99th percentile coordinates.",
+        "note": "Approximate geometric shaft axis, not an assertion of exact C3 symmetry. Do not replace this center by the STL coordinate origin for the 120-degree comparison.",
+        "direction_toward_handle": [
+          -0.0004128615750615938,
+          -0.0017286219410961859,
+          0.9999984207045052
+        ],
+        "point_at_source_z_zero": [
+          -0.009522809909401278,
+          0.06936852654280952,
+          0.0
+        ],
+        "tilt_from_positive_z_degrees": 0.10182850920645208,
+        "maximum_section_center_residual": 0.0011082740723900282
+      },
+      "icp_samples": 4096,
+      "icp_max_iterations": 128,
+      "icp_seed": 42,
+      "icp_free_transform_sample_rms": 0.0278596431016922,
+      "exact_120_validation": {
+        "shaft_axis": {
+          "sampled_one_way_rms": 0.025302046909928322,
+          "median_distance": 0.010681933723390102,
+          "p95_distance": 0.057927291840314865
+        },
+        "refined_axis": {
+          "sampled_one_way_rms": 0.024249356240034103,
+          "median_distance": 0.012289339676499367,
+          "p95_distance": 0.0551971010863781
+        }
+      },
+      "validation_sample_count": 32768,
+      "note": "TRELLIS.2 has only an approximate best-fitting rotation axis; a low residual is not proof of exact C3 symmetry. Sampling RMS includes the nearest-neighbor sampling floor.",
+      "elapsed_seconds": 1.36
+    },
+    "symtrellis": {
+      "source": "spinning_top_symmetrized_rescaled.stl",
+      "source_sha256": "fafe850889fae7eb959264ef52dc31ee99e223d9278b5680f6c2862913c2fcdb",
+      "axis_direction": [
+        0.00044330352102406323,
+        0.00047398280003108084,
+        0.9999998211860657
+      ],
+      "axis_point_at_z0": [
+        -0.013158523477613926,
+        0.0829935371875763,
+        0.0
+      ],
+      "tilt_from_z_degrees": 0.03426402062177658,
+      "angle_to_shaft_axis_degrees": 0.03426402062177658,
+      "shaft_axis_initial": {
+        "method": "Least-squares line through 9 narrow upper/lower shaft sections; each XY section center uses the midpoint of its 1st and 99th percentile coordinates.",
+        "note": "Approximate geometric shaft axis, not an assertion of exact C3 symmetry. Do not replace this center by the STL coordinate origin for the 120-degree comparison.",
+        "direction_toward_handle": [
+          0.001156164273621778,
+          0.0005043164643899554,
+          0.9999992044742216
+        ],
+        "point_at_source_z_zero": [
+          -0.012661890722206044,
+          0.08043301026164268,
+          0.0
+        ],
+        "tilt_from_positive_z_degrees": 0.07227112041568041,
+        "maximum_section_center_residual": 0.0004593613811280186
+      },
+      "icp_samples": 4096,
+      "icp_max_iterations": 128,
+      "icp_seed": 42,
+      "icp_free_transform_sample_rms": 0.018118051812052727,
+      "exact_120_validation": {
+        "shaft_axis": {
+          "sampled_one_way_rms": 0.012785312719643116,
+          "median_distance": 0.007277769036591053,
+          "p95_distance": 0.026820991188287735
+        },
+        "refined_axis": {
+          "sampled_one_way_rms": 0.01258978433907032,
+          "median_distance": 0.0076800500974059105,
+          "p95_distance": 0.02547346241772175
+        }
+      },
+      "validation_sample_count": 32768,
+      "note": "TRELLIS.2 has only an approximate best-fitting rotation axis; a low residual is not proof of exact C3 symmetry. Sampling RMS includes the nearest-neighbor sampling floor.",
+      "elapsed_seconds": 0.88
+    }
+  }
+}

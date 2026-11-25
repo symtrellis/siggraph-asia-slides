@@ -1,0 +1,788 @@
+{
+  "coordinates": "Z-up canonical axes, source GLB is Y-up",
+  "models": [
+    {
+      "example": "00_turboblade",
+      "variant": "vanilla",
+      "fold": 7,
+      "file": "00_turboblade_vanilla.glb",
+      "source_sha256": "4a5f009ef661df524d34fde35b4a673b0d7c0533f214871c5a19d8ea96635eaa",
+      "output_sha256": "5efc4e720888885ea24de35d98f4a29f1ef1ce2e0d4b69e0aa06b2faf2637322",
+      "triangle_count": 646934,
+      "vertex_count": 551745,
+      "normal_report": {
+        "vertices": 534259,
+        "faces": 646934,
+        "exact_unique_positions": 300257,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 15445,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 15,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 298,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.019983937963843346,
+        0.012096715159714222,
+        0.9997271299362183
+      ],
+      "axis_point_z_up": [
+        0.008085890673100948,
+        -0.010726558044552803,
+        -3.184052184224129e-05
+      ],
+      "method": "previous GPU axis cache",
+      "tilt_degrees": 1.3385218381881714,
+      "bytes": 24065668,
+      "source_sampled_exact_step_rms": 0.023657631129026413,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 23212068,
+      "texture_bytes": 851998,
+      "uv_16bit": true,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 5120896,
+          "compressed_bytes": 456327,
+          "channel_rmse_8bit": [
+            0.9939000010490417,
+            0.8580999970436096,
+            0.9599000215530396
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2105516,
+          "compressed_bytes": 395671,
+          "channel_rmse_8bit": [
+            0.7501999735832214,
+            0.4830000102519989,
+            0.9562000036239624
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 968928,
+        "source_to_compressed": {
+          "rms": 5.151352161192335e-05,
+          "p95": 6.909477815497667e-05,
+          "p99": 0.00012730140588246286,
+          "maximum": 0.0028447883669286966
+        },
+        "compressed_to_source": {
+          "rms": 3.1378567655337974e-05,
+          "p95": 6.687081622658297e-05,
+          "p99": 0.00011967363388976082,
+          "maximum": 0.00039242865750566125
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "00_turboblade",
+      "variant": "symtrellis",
+      "fold": 7,
+      "file": "00_turboblade_symtrellis.glb",
+      "source_sha256": "9870fe7dbb90d1f36d6fc72a7136ddfd8c6590da4e9a288e864d11db2d8d2057",
+      "output_sha256": "e39381e443ca92c2f7bded13a285f1dcf509d2eeaa1545d0e4c75627f9f4918b",
+      "triangle_count": 624510,
+      "vertex_count": 407053,
+      "normal_report": {
+        "vertices": 404822,
+        "faces": 624510,
+        "exact_unique_positions": 310449,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 1448,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 11,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 182,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.0034117349423468113,
+        0.0009648236446082592,
+        0.9999937415122986
+      ],
+      "axis_point_z_up": [
+        -0.0008577202679589391,
+        0.002464800840243697,
+        5.482195319927996e-07
+      ],
+      "method": "previous GPU axis cache",
+      "tilt_degrees": 0.20270878076553345,
+      "bytes": 21466064,
+      "source_sampled_exact_step_rms": 0.012585416436195374,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 20519816,
+      "texture_bytes": 944666,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 5029344,
+          "compressed_bytes": 540464,
+          "channel_rmse_8bit": [
+            0.8535000085830688,
+            0.8510000109672546,
+            1.0601999759674072
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2071392,
+          "compressed_bytes": 404202,
+          "channel_rmse_8bit": [
+            0.5957000255584717,
+            0.8377000093460083,
+            0.8392000198364258
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 924044,
+        "source_to_compressed": {
+          "rms": 1.775175223883707e-05,
+          "p95": 3.422754161874764e-05,
+          "p99": 6.938421574886888e-05,
+          "maximum": 0.0008599166758358479
+        },
+        "compressed_to_source": {
+          "rms": 1.7710986867314205e-05,
+          "p95": 3.460923471720889e-05,
+          "p99": 7.102900417521596e-05,
+          "maximum": 0.00030586516368202865
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "01_fountain",
+      "variant": "vanilla",
+      "fold": 4,
+      "file": "01_fountain_vanilla.glb",
+      "source_sha256": "3eb0b445197e88cee00d96ef4b755d7d8f6a66f8d8f02f12cfad40047a3be13c",
+      "output_sha256": "58756bf7b10949a3abb211713ce868f0ac37fa0289b8f5a91563f55c8af2ef38",
+      "triangle_count": 637534,
+      "vertex_count": 477451,
+      "normal_report": {
+        "vertices": 475173,
+        "faces": 637534,
+        "exact_unique_positions": 316593,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 2069,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 10,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 735,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        -0.00048353857710026205,
+        0.001656539854593575,
+        0.9999985694885254
+      ],
+      "axis_point_z_up": [
+        0.00034750415943562984,
+        -0.0006104317144490778,
+        1.1792378700192785e-06
+      ],
+      "method": "GPU near-Z ICP",
+      "tilt_degrees": 0.09691329300403595,
+      "bytes": 23896924,
+      "source_sampled_exact_step_rms": 0.015041114762425423,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 22928840,
+      "texture_bytes": 966496,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 4888128,
+          "compressed_bytes": 415850,
+          "channel_rmse_8bit": [
+            1.0247000455856323,
+            0.8619999885559082,
+            1.2151999473571777
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2304464,
+          "compressed_bytes": 550646,
+          "channel_rmse_8bit": [
+            0.8216999769210815,
+            0.689300000667572,
+            1.2115999460220337
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 983456,
+        "source_to_compressed": {
+          "rms": 7.59923568693921e-05,
+          "p95": 0.0001238700351677835,
+          "p99": 0.0001907547703012824,
+          "maximum": 0.003011643886566162
+        },
+        "compressed_to_source": {
+          "rms": 5.491746196639724e-05,
+          "p95": 0.00012194534065201879,
+          "p99": 0.00018239305063616484,
+          "maximum": 0.0006380584673024714
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "01_fountain",
+      "variant": "symtrellis",
+      "fold": 4,
+      "file": "01_fountain_symtrellis.glb",
+      "source_sha256": "ba98f0ed98f6415958e099d3a764290007fee410bed07b16de95cbceb12fdc4c",
+      "output_sha256": "8902d71b65e165f4fd72a5b5161738710ecc0f5ad9296910df93b5f8d563a15c",
+      "triangle_count": 644700,
+      "vertex_count": 526326,
+      "normal_report": {
+        "vertices": 521103,
+        "faces": 644700,
+        "exact_unique_positions": 315865,
+        "boundary_edges": 14,
+        "nonmanifold_edges": 4574,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 16,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 1661,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.00047606698353774846,
+        0.00035190119524486363,
+        0.9999998211860657
+      ],
+      "axis_point_z_up": [
+        -0.00024577672593295574,
+        -9.653707093093544e-05,
+        1.509777263208889e-07
+      ],
+      "method": "GPU near-Z ICP",
+      "tilt_degrees": 0.03426402062177658,
+      "bytes": 26325120,
+      "source_sampled_exact_step_rms": 0.010484905913472176,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 24578832,
+      "texture_bytes": 1744701,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6395460,
+          "compressed_bytes": 1211326,
+          "channel_rmse_8bit": [
+            1.468000054359436,
+            1.3940000534057617,
+            1.6039999723434448
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2414524,
+          "compressed_bytes": 533375,
+          "channel_rmse_8bit": [
+            0.38089999556541443,
+            0.7023000121116638,
+            1.0952999591827393
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 977625,
+        "source_to_compressed": {
+          "rms": 7.216020458145067e-05,
+          "p95": 0.00011403582902858034,
+          "p99": 0.00018607371021062136,
+          "maximum": 0.004013314843177795
+        },
+        "compressed_to_source": {
+          "rms": 4.829707177123055e-05,
+          "p95": 0.00011196704144822434,
+          "p99": 0.000175719746039249,
+          "maximum": 0.0004518434579949826
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "02_icosahedral",
+      "variant": "vanilla",
+      "fold": 5,
+      "file": "02_icosahedral_vanilla.glb",
+      "source_sha256": "baccf8796cc4edb89ba9f90dc6ea148ce7bf8136ff83ae9c5d37a475f7ae8ffb",
+      "output_sha256": "ad3f318766c1dd0c6176ad5474b9dc51c3d3f45a3aa9f62ea0136e892a2e3f95",
+      "triangle_count": 625428,
+      "vertex_count": 408098,
+      "normal_report": {
+        "vertices": 406692,
+        "faces": 625428,
+        "exact_unique_positions": 312387,
+        "boundary_edges": 2,
+        "nonmanifold_edges": 950,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 9,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 187,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "axis_point_z_up": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "method": "canonical Z axis (user specified five-fold axis)",
+      "tilt_degrees": 0.0,
+      "bytes": 23112992,
+      "source_sampled_exact_step_rms": 0.03505462035536766,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 20564272,
+      "texture_bytes": 2547132,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6241912,
+          "compressed_bytes": 1291609,
+          "channel_rmse_8bit": [
+            1.7122000455856323,
+            1.5364999771118164,
+            1.9280999898910522
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3200360,
+          "compressed_bytes": 1255523,
+          "channel_rmse_8bit": [
+            0.8830000162124634,
+            1.1410000324249268,
+            1.6136000156402588
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 931664,
+        "source_to_compressed": {
+          "rms": 4.0939652535598725e-05,
+          "p95": 7.756319973850623e-05,
+          "p99": 0.00013310398207977414,
+          "maximum": 0.002552939811721444
+        },
+        "compressed_to_source": {
+          "rms": 3.4278979001101106e-05,
+          "p95": 7.652558997506276e-05,
+          "p99": 0.000129890744574368,
+          "maximum": 0.0002883467241190374
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "02_icosahedral",
+      "variant": "symtrellis",
+      "fold": 5,
+      "file": "02_icosahedral_symtrellis.glb",
+      "source_sha256": "b2a2d8bc92b1f1591a84f86e715f3635423c9170c21d5236563beb52b702a954",
+      "output_sha256": "7b772a75702b9c241fc977bed20df0842dece97d770d453e32a8094fad99389a",
+      "triangle_count": 607736,
+      "vertex_count": 586331,
+      "normal_report": {
+        "vertices": 573089,
+        "faces": 607736,
+        "exact_unique_positions": 289816,
+        "boundary_edges": 14,
+        "nonmanifold_edges": 31839,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 11,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 1515,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "axis_point_z_up": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "method": "canonical Z axis (user specified five-fold axis)",
+      "tilt_degrees": 0.0,
+      "bytes": 26987160,
+      "source_sampled_exact_step_rms": 0.011680617928504944,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 23710100,
+      "texture_bytes": 3275453,
+      "uv_16bit": true,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 6786308,
+          "compressed_bytes": 1314671,
+          "channel_rmse_8bit": [
+            1.7627999782562256,
+            1.59089994430542,
+            1.9128999710083008
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4047812,
+          "compressed_bytes": 1960782,
+          "channel_rmse_8bit": [
+            0.9186000227928162,
+            1.202299952507019,
+            2.7941999435424805
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 994550,
+        "source_to_compressed": {
+          "rms": 0.00017023009422700852,
+          "p95": 9.12571485969238e-05,
+          "p99": 0.00032583807478658855,
+          "maximum": 0.003286799881607294
+        },
+        "compressed_to_source": {
+          "rms": 3.952262704842724e-05,
+          "p95": 7.773783727316186e-05,
+          "p99": 0.00013357584248296916,
+          "maximum": 0.0027762996032834053
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "06_gear",
+      "variant": "vanilla",
+      "fold": 15,
+      "file": "06_gear_vanilla.glb",
+      "source_sha256": "419761eb64b48dea8d51494d86778f37b4d168988d636187e7c5627584cc19d4",
+      "output_sha256": "9c7ca94f3503b396da11d869e164bbcb0af8989931c25451c229346defda4ddc",
+      "triangle_count": 644761,
+      "vertex_count": 385261,
+      "normal_report": {
+        "vertices": 385167,
+        "faces": 644761,
+        "exact_unique_positions": 322391,
+        "boundary_edges": 57,
+        "nonmanifold_edges": 6,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 10,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 33,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.01106048934161663,
+        -0.0001772758550941944,
+        0.9999388456344604
+      ],
+      "axis_point_z_up": [
+        -0.00027087266789749265,
+        0.000249691482167691,
+        3.0404344215639867e-06
+      ],
+      "method": "GPU near-Z ICP",
+      "tilt_degrees": 0.6336560845375061,
+      "bytes": 21589780,
+      "source_sampled_exact_step_rms": 0.022019054740667343,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 20065484,
+      "texture_bytes": 1522712,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 5831768,
+          "compressed_bytes": 825458,
+          "channel_rmse_8bit": [
+            1.1705000400543213,
+            1.1480000019073486,
+            1.3514000177383423
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2424756,
+          "compressed_bytes": 697254,
+          "channel_rmse_8bit": [
+            0.5005000233650208,
+            0.8307999968528748,
+            0.820900022983551
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 976215,
+        "source_to_compressed": {
+          "rms": 2.5520856070215814e-05,
+          "p95": 5.4027641454013065e-05,
+          "p99": 0.00011289457324892282,
+          "maximum": 0.00036802305839955807
+        },
+        "compressed_to_source": {
+          "rms": 2.535282874305267e-05,
+          "p95": 5.334503293852322e-05,
+          "p99": 0.00011168007040396333,
+          "maximum": 0.000373859831597656
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    },
+    {
+      "example": "06_gear",
+      "variant": "symtrellis",
+      "fold": 15,
+      "file": "06_gear_symtrellis.glb",
+      "source_sha256": "4e617ca99858b3dfdc8e6ccde1bd8001e171906c79dfd339564caed0c53f2cba",
+      "output_sha256": "3225202ff8bf2f485f9ff31aeb068ad7ce00d096f41e24047924a9f658ff4913",
+      "triangle_count": 647540,
+      "vertex_count": 401823,
+      "normal_report": {
+        "vertices": 401719,
+        "faces": 647540,
+        "exact_unique_positions": 323779,
+        "boundary_edges": 42,
+        "nonmanifold_edges": 15,
+        "inconsistent_winding_edges": 0,
+        "sharp_angle_degrees": 75.0,
+        "fan_iterations": 12,
+        "normal_filter": {
+          "crease_degrees": 75.0,
+          "iterations": 3,
+          "blend": 0.35,
+          "neighbor_angle_degrees": 35.0
+        },
+        "fallback_corners": 47,
+        "opposed_corners_after": 0,
+        "max_displacement": 0.0
+      },
+      "axis_z_up": [
+        0.00016155658522620797,
+        -0.0008554692030884326,
+        0.9999996423721313
+      ],
+      "axis_point_z_up": [
+        -0.0006713201873935759,
+        0.0004321766900829971,
+        4.781702500622487e-07
+      ],
+      "method": "GPU near-Z ICP",
+      "tilt_degrees": 0.04845663905143738,
+      "bytes": 22265260,
+      "source_sampled_exact_step_rms": 0.013573182746767998,
+      "axis_fit_source": "original fast-forward GLB at original export resolution",
+      "geometry_bytes": 20628816,
+      "texture_bytes": 1634855,
+      "uv_16bit": false,
+      "normal_16bit": false,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 5781384,
+          "compressed_bytes": 745502,
+          "channel_rmse_8bit": [
+            1.1262999773025513,
+            1.0658999681472778,
+            1.301300048828125
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 2815416,
+          "compressed_bytes": 889353,
+          "channel_rmse_8bit": [
+            0.5741999745368958,
+            0.9128000140190125,
+            0.8798999786376953
+          ]
+        }
+      ],
+      "geometry_comparison": {
+        "original_triangles": 958505,
+        "source_to_compressed": {
+          "rms": 2.4215292796725407e-05,
+          "p95": 5.463973866426386e-05,
+          "p99": 0.0001012262437143363,
+          "maximum": 0.00027822915581054986
+        },
+        "compressed_to_source": {
+          "rms": 2.427624713163823e-05,
+          "p95": 5.40328401257284e-05,
+          "p99": 0.00010190370812779292,
+          "maximum": 0.00026349149993620813
+        },
+        "distance_unit": "fraction of original bounding-box diagonal"
+      },
+      "face_decimation_target": 650000,
+      "texture_size": 2048,
+      "textured": true
+    }
+  ],
+  "normal_smoothing": {
+    "crease_degrees": 75.0,
+    "iterations": 3,
+    "blend": 0.35,
+    "neighbor_angle_degrees": 35.0
+  },
+  "gpu": "NVIDIA GeForce RTX 4090"
+}
