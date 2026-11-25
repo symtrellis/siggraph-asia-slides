@@ -53,7 +53,7 @@ body {
   grid-template-rows: auto minmax(0, 1fr);
 }
 
-.slide:not(.title-slide)::after {
+.slide:not(.title-slide):not(.closing-slide)::after {
   content: "";
   position: absolute;
   right: 2cqw;
@@ -64,7 +64,7 @@ body {
   pointer-events: none;
 }
 
-.slide:not(.title-slide)::before {
+.slide:not(.title-slide):not(.closing-slide)::before {
   content: attr(data-page-number);
   position: absolute;
   left: 2cqw;
@@ -72,6 +72,15 @@ body {
   color: var(--text);
   font: 400 1.15cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
   pointer-events: none;
+}
+
+.closing-slide {
+  place-items: center;
+}
+
+.closing-slide h2 {
+  margin: 0;
+  font: 400 9cqw / 1.1 "Linux Libertine", Georgia, serif;
 }
 
 .centered-question {
@@ -225,6 +234,75 @@ body {
 }
 
 .visuals-gallery-views:active {
+  cursor: grabbing;
+}
+
+.fold-manipulation-gallery {
+  position: absolute;
+  inset: 8.2cqw 3.5cqw 5.8cqw;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 0.8cqw 0.7cqw;
+}
+
+.fold-manipulation-gallery figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.fold-manipulation-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.fold-manipulation-gallery figcaption {
+  font: 400 1.8cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.multi-symmetry-gallery {
+  position: absolute;
+  inset: 8.5cqw 3cqw 7cqw;
+  display: grid;
+  grid-template: minmax(0, 1fr) auto / repeat(3, minmax(0, 1fr));
+  gap: 0.5cqw 0;
+  text-align: center;
+  font: 400 2.1cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+}
+
+.multi-symmetry-image {
+  grid-area: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.multi-symmetry-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.15);
+}
+
+.multi-symmetry-views {
+  grid-area: 1 / 2 / 2 / 4;
+  min-width: 0;
+  min-height: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.multi-symmetry-views:active {
   cursor: grabbing;
 }
 

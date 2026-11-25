@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SymTRELLIS: Symmetry-Enforced Voxel Latents for 3D Generation</title>
-    <link rel="stylesheet" href="./slides.css?v=visuals-gallery">
+    <link rel="stylesheet" href="./slides.css?v=multi-symmetry">
     <script type="importmap">
       { "imports": { "three": "./vendor/three/build/three.module.min.js" } }
     </script>
@@ -251,6 +251,39 @@
       <canvas class="visuals-gallery-views" aria-label="八个 SymTRELLIS 模型按各自对称阶旋转"></canvas>
     </section>
 
+    <section class="slide" aria-label="Slide 17" hidden>
+      <h2 class="slide-heading">Applicaiton: Fold Manipulation</h2>
+      <div class="fold-manipulation-gallery">
+        <figure><img src="./assets/images/fold-manipulation/fold-09.webp" alt="9 fold 齿轮" width="1024" height="1024"><figcaption>9 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-10.webp" alt="10 fold 齿轮" width="1024" height="1024"><figcaption>10 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-11.webp" alt="11 fold 齿轮" width="1024" height="1024"><figcaption>11 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-12.webp" alt="12 fold 齿轮" width="1024" height="1024"><figcaption>12 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-13.webp" alt="13 fold 齿轮" width="1024" height="1024"><figcaption>13 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-14.webp" alt="14 fold 齿轮" width="1024" height="1024"><figcaption>14 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-15.webp" alt="15 fold 齿轮" width="1024" height="1024"><figcaption>15 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-16.webp" alt="16 fold 齿轮" width="1024" height="1024"><figcaption>16 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-17.webp" alt="17 fold 齿轮" width="1024" height="1024"><figcaption>17 Fold</figcaption></figure>
+        <figure><img src="./assets/images/fold-manipulation/fold-18.webp" alt="18 fold 齿轮" width="1024" height="1024"><figcaption>18 Fold</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Slide 18" hidden>
+      <h2 class="slide-heading">Application: Multi-Symmetry</h2>
+      <div class="multi-symmetry-gallery">
+        <div class="multi-symmetry-image">
+          <img src="./assets/images/multi-symmetry-input.webp" width="1024" height="1024" alt="转椅的输入图片">
+        </div>
+        <canvas class="multi-symmetry-views" aria-label="空间分割与 SymTRELLIS 椅子的交互三维视图"></canvas>
+        <span>Input image</span>
+        <span>Space segmentation</span>
+        <span>SymTRELLIS</span>
+      </div>
+    </section>
+
+    <section class="slide closing-slide" aria-label="Slide 19" hidden>
+      <h2>Thanks!</h2>
+    </section>
+
     <script>
       const slides = Array.from(document.querySelectorAll(".slide"), (element, index) => ({
         element,
@@ -301,6 +334,10 @@
       const visualsGallerySlide = visualsGalleryCanvas.closest(".slide");
       let visualsGalleryScene = null;
       let visualsGalleryLoading = null;
+      const multiSymmetryCanvas = document.querySelector(".multi-symmetry-views");
+      const multiSymmetrySlide = multiSymmetryCanvas.closest(".slide");
+      let multiSymmetryScene = null;
+      let multiSymmetryLoading = null;
       const sectorGearCanvas = document.querySelector(".sector-gear-view");
       const sectorGearSlide = sectorGearCanvas.closest(".slide");
       let sectorGearScene = null;
@@ -497,6 +534,27 @@
         }
       }
 
+      function updateMultiSymmetry(active) {
+        if (!active) {
+          multiSymmetryScene?.stop();
+          return;
+        }
+        if (multiSymmetryScene) {
+          multiSymmetryScene.start();
+          return;
+        }
+        if (!multiSymmetryLoading) {
+          multiSymmetryLoading = import("./js/scenes/multi-symmetry.js?v=1")
+            .then(({ createMultiSymmetryScene }) => createMultiSymmetryScene(multiSymmetryCanvas))
+            .then((scene) => {
+              multiSymmetryScene = scene;
+              if (!multiSymmetrySlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载 Multi-Symmetry 场景", error))
+            .finally(() => { multiSymmetryLoading = null; });
+        }
+      }
+
       function updateSpinningTopScene(active) {
         if (!active) {
           spinningTopScene?.stop();
@@ -670,6 +728,7 @@
         updateSpinningTopScene(slide.element === spinningTopSlide);
         updateShapeGallery(slide.element === shapeGallerySlide);
         updateVisualsGallery(slide.element === visualsGallerySlide);
+        updateMultiSymmetry(slide.element === multiSymmetrySlide);
         updateSectorGear(slide.element === sectorGearSlide);
         updateDragonComparison(slide.element);
         updateMapperIntro(slide.element === mapperIntroSlide, slide.element === mapperIntroSlide ? stepCount : 0);
