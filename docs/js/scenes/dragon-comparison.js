@@ -78,16 +78,16 @@ async function loadDragon(loader, file, material) {
   return new THREE.Mesh(geometry, material);
 }
 
-export async function createDragonComparison(canvas) {
+export async function createDragonComparison(canvas, { staticComparison = false } = {}) {
   const isMapperComparison = canvas.hasAttribute("data-mapper-comparison");
   const files = isMapperComparison ? mapperComparisonFiles : poseComparisonFiles;
   const columns = files.length / 2;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: staticComparison });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.AgXToneMapping;
-  renderer.toneMappingExposure = 1;
+  renderer.toneMappingExposure = staticComparison ? 0.82 : 1;
 
   const texture = await new EXRLoader().setDataType(THREE.HalfFloatType).loadAsync(hdriSource.href);
   texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -172,7 +172,7 @@ export async function createDragonComparison(canvas) {
 
   function draw(now) {
     if (renderer.getContext().isContextLost()) return;
-    updateView(now);
+    if (!staticComparison) updateView(now);
     const size = canvas.getBoundingClientRect();
     if (size.width < 2 || size.height < 2) return;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -209,6 +209,126 @@ export async function createDragonComparison(canvas) {
   function tick(now) {
     draw(now);
     frame = requestAnimationFrame(tick);
+  }
+
+  // 海报使用统一的较低斜视角；所有模型保持原始坐标和相对尺度。
+  if (staticComparison) {
+    let active = false;
+    let retries = 0;
+    const combinedBounds = new THREE.Box3();
+    for (const object of objects) {
+      object.geometry.computeBoundingBox();
+      combinedBounds.union(object.geometry.boundingBox);
+    }
+    const center = combinedBounds.getCenter(new THREE.Vector3());
+    const azimuth = THREE.MathUtils.degToRad(-75);
+    const elevation = THREE.MathUtils.degToRad(27);
+    const direction = new THREE.Vector3(Math.cos(azimuth) * Math.cos(elevation), Math.sin(azimuth) * Math.cos(elevation), Math.sin(elevation));
+    const posterCamera = new THREE.PerspectiveCamera(22, 1, 0.02, 40);
+    const posterRight = new THREE.Vector3().crossVectors(zAxis, direction).normalize();
+    const posterUp = new THREE.Vector3().crossVectors(direction, posterRight).normalize();
+    // 真实顶点的投影边界比包围盒更紧，仍然只计算一个供所有模型共享的相机距离。
+    const projectedPositions = objects.map((object) => {
+      const vertices = object.geometry.attributes.position;
+      const result = new Float32Array(vertices.count * 3);
+      const delta = new THREE.Vector3();
+      for (let index = 0; index < vertices.count; index++) {
+        delta.fromBufferAttribute(vertices, index).sub(center);
+        result[index * 3] = Math.abs(delta.dot(posterRight));
+        result[index * 3 + 1] = Math.abs(delta.dot(posterUp));
+        result[index * 3 + 2] = delta.dot(direction);
+      }
+      return result;
+    });
+    function fitPosterCamera(aspect) {
+      posterCamera.aspect = aspect;
+      posterCamera.updateProjectionMatrix();
+      posterCamera.up.copy(zAxis);
+      const halfFov = Math.tan(THREE.MathUtils.degToRad(posterCamera.fov / 2)) * 0.94;
+      let distance = 0.8;
+      for (const positions of projectedPositions) {
+        for (let index = 0; index < positions.length; index += 3) {
+          distance = Math.max(distance, positions[index + 2] + Math.max(
+            positions[index] / (halfFov * aspect), positions[index + 1] / halfFov,
+          ));
+        }
+      }
+      posterCamera.position.copy(center).addScaledVector(direction, distance);
+      posterCamera.lookAt(center);
+      posterCamera.updateMatrixWorld();
+    }
+    function drawStatic() {
+      frame = null;
+      if (!active || renderer.getContext().isContextLost()) return;
+      const size = canvas.getBoundingClientRect();
+      if (size.width < 2 || size.height < 2) return;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      const panelWidth = Math.max(1, Math.round(size.width * pixelRatio / columns));
+      const panelHeight = Math.max(1, Math.round(size.height * pixelRatio / 2));
+      const width = columns * panelWidth;
+      const height = 2 * panelHeight;
+      if (canvas.width !== width || canvas.height !== height) renderer.setSize(width, height, false);
+      fitPosterCamera(panelWidth / panelHeight);
+      renderer.autoClear = false;
+      renderer.setScissorTest(false);
+      renderer.setViewport(0, 0, width, height);
+      renderer.clear(true, true, true);
+      renderer.setScissorTest(true);
+      scenes.forEach((scene, index) => {
+        const x = index % columns * panelWidth;
+        const y = (1 - Math.floor(index / columns)) * panelHeight;
+        renderer.setViewport(x, y, panelWidth, panelHeight);
+        renderer.setScissor(x, y, panelWidth, panelHeight);
+        renderer.render(scene, posterCamera);
+      });
+      renderer.setScissorTest(false);
+      const gl = renderer.getContext();
+      gl.finish();
+      // 首帧着色器或网格尚未完成绘制时重试；正常情况下不持续渲染海报。
+      const pixels = new Uint8Array(width * height * 4);
+      gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      const occupied = new Array(scenes.length).fill(false);
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (pixels[(y * width + x) * 4 + 3] > 10) {
+            const index = (y >= panelHeight ? 0 : columns) + Math.floor(x / panelWidth);
+            occupied[index] = true;
+          }
+        }
+      }
+      if (!occupied.every(Boolean) && retries < 6) {
+        retries++;
+        frame = requestAnimationFrame(drawStatic);
+      }
+    }
+    function invalidate() {
+      if (!active || frame !== null) return;
+      retries = 0;
+      frame = requestAnimationFrame(drawStatic);
+    }
+    const observer = new ResizeObserver(invalidate);
+    canvas.addEventListener("webglcontextrestored", () => {
+      environment.dispose();
+      environment = makeEnvironment();
+      scenes.forEach((scene) => { scene.environment = environment.texture; });
+      previousView = null;
+      invalidate();
+    });
+    return {
+      start() {
+        if (active) return;
+        active = true;
+        previousView = null;
+        observer.observe(canvas);
+        invalidate();
+      },
+      stop() {
+        active = false;
+        observer.disconnect();
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+      },
+    };
   }
 
   function cancelReturn() {

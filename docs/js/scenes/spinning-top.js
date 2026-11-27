@@ -139,17 +139,18 @@ function makePanel(geometry, material, environment, topView, perspective = false
   return { scene, object, maskScene, mask, camera, beauty, original, rotated, topView };
 }
 
-function makeCompositor() {
+function makeCompositor(background, referenceColor, staggered) {
   const uniforms = {
     beauty: { value: null }, original: { value: null }, rotated: { value: null },
     pixel: { value: new THREE.Vector2() },
     referenceOpacity: { value: 0 }, currentOpacity: { value: 0 },
-    background: { value: new THREE.Color(CONFIG.background) },
-    yellow: { value: new THREE.Color(CONFIG.yellow) },
+    background: { value: new THREE.Color(background) },
+    yellow: { value: new THREE.Color(referenceColor) },
     blue: { value: new THREE.Color(CONFIG.blue) },
   };
   const material = new THREE.ShaderMaterial({
     uniforms,
+    defines: staggered ? { STAGGERED_PANELS: 1 } : {},
     depthTest: false,
     depthWrite: false,
     vertexShader: `
@@ -219,6 +220,10 @@ function makeCompositor() {
         vec3 color = mix(background, modelColor, surface.a);
         float a = referenceOpacity > 0.0 ? referenceOpacity * featureLines(original) : 0.0;
         float b = currentOpacity > 0.0 ? currentOpacity * featureLines(rotated) : 0.0;
+        #ifdef STAGGERED_PANELS
+          // 相邻视图的空白区域不能盖住另一个视图的网格或轮廓。
+          if (max(surface.a, max(a, b)) < 0.001) discard;
+        #endif
         // 重合处混合两种颜色，不用后绘制的轮廓覆盖前一条。
         vec3 line = (a * yellow + b * blue) / max(a + b, 0.0001);
         color = mix(color, line, max(a, b));
@@ -232,7 +237,7 @@ function makeCompositor() {
   return { scene, camera: new THREE.Camera(), uniforms };
 }
 
-export async function createSpinningTopScene(canvas) {
+export async function createSpinningTopScene(canvas, { staticComparison = false } = {}) {
   const models = await loadModels();
   const material = new THREE.MeshStandardMaterial({
     color: 0xa79f96, metalness: 0.94, roughness: 0.24, side: THREE.DoubleSide,
@@ -241,6 +246,10 @@ export async function createSpinningTopScene(canvas) {
     columns: 2,
     rows: 2,
     outlinePixels: 1.05,
+    fixedAngle: staticComparison ? -2 * Math.PI / 3 : null,
+    staggered: staticComparison,
+    background: staticComparison ? 0xffffff : CONFIG.background,
+    referenceColor: staticComparison ? 0xd6a000 : CONFIG.yellow,
     items: [
       { geometry: models[0], material, topView: true, fold: 3 },
       { geometry: models[1], material, topView: true, fold: 3 },
@@ -254,11 +263,13 @@ export async function createSpinningTopScene(canvas) {
 export async function createRotatingComparison(canvas, {
   columns, rows, outlinePixels, items, animated = true, idleSpinPeriodSeconds = 0,
   renderOutlines = true,
+  fixedAngle = null, background = CONFIG.background, referenceColor = CONFIG.yellow,
+  staggered = false,
 }) {
   const studioTexture = await new EXRLoader().setDataType(THREE.HalfFloatType)
     .loadAsync(new URL("../../assets/images/neutral_studio.exr", import.meta.url).href);
   studioTexture.mapping = THREE.EquirectangularReflectionMapping;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !renderOutlines, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !renderOutlines, powerPreference: "high-performance", preserveDrawingBuffer: fixedAngle !== null });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -271,7 +282,7 @@ export async function createRotatingComparison(canvas, {
     fittingRadius: item.fittingRadius,
     cameraDistance: item.cameraDistance ?? 5,
   }));
-  const compositor = renderOutlines ? makeCompositor() : null;
+  const compositor = renderOutlines ? makeCompositor(background, referenceColor, staggered) : null;
   let frame = null;
   let startTime = 0;
   let lastInteraction = -Infinity;
@@ -283,6 +294,7 @@ export async function createRotatingComparison(canvas, {
   let previousRotations = null;
   let idleSpinAngle = 0;
   let lastIdleSpinFrame = null;
+  let staticRunning = false;
 
   canvas.addEventListener("webglcontextrestored", () => {
     environment.dispose();
@@ -290,6 +302,7 @@ export async function createRotatingComparison(canvas, {
     panels.forEach((panel) => { panel.scene.environment = environment.texture; });
     previousView = null;
     previousRotations = null;
+    if (fixedAngle !== null) scheduleStaticRender();
   });
 
   function updateCamera(panel, aspect) {
@@ -361,25 +374,38 @@ export async function createRotatingComparison(canvas, {
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
     const width = columns * Math.max(1, Math.round(size.width * pixelRatio / columns));
     const height = rows * Math.max(1, Math.round(size.height * pixelRatio / rows));
-    const panelWidth = width / columns;
-    const panelHeight = height / rows;
+    const columnWidth = width / columns;
+    const rowHeight = height / rows;
     const resized = renderer.domElement.width !== width || renderer.domElement.height !== height;
     if (resized) renderer.setSize(width, height, false);
 
     const viewChanged = resized || !previousView || previousView.azimuth !== azimuth || previousView.elevation !== elevation;
     const elapsed = (now - startTime) / 1000;
-    const rotations = panels.map((panel) =>
-      animated ? rotationAt(elapsed, panel.fold) : { angle: idleSpinAngle, reference: 0, current: 0 }
-    );
+    const rotations = panels.map((panel) => {
+      if (fixedAngle !== null) return { angle: fixedAngle, reference: 1, current: 1 };
+      return animated ? rotationAt(elapsed, panel.fold) : { angle: idleSpinAngle, reference: 0, current: 0 };
+    });
     if (!viewChanged && previousRotations && rotations.every((rotation, index) => {
       const previous = previousRotations[index];
       return previous.angle === rotation.angle && previous.reference === rotation.reference && previous.current === rotation.current;
     })) return;
 
+    if (staggered) {
+      renderer.setRenderTarget(null);
+      renderer.setScissorTest(false);
+      renderer.setViewport(0, 0, width, height);
+      renderer.clear();
+    }
+
     panels.forEach((panel, index) => {
       const rotation = rotations[index];
-      const x = (index % columns) * panelWidth;
-      const y = (rows - 1 - Math.floor(index / columns)) * panelHeight;
+      const column = index % columns;
+      const row = Math.floor(index / columns);
+      const staggeredSize = Math.min(columnWidth, Math.round(height * 0.66));
+      const panelWidth = staggered ? staggeredSize : columnWidth;
+      const panelHeight = staggered ? staggeredSize : rowHeight;
+      const x = column * columnWidth + (staggered && row === 1 ? columnWidth - panelWidth : 0);
+      const y = staggered ? (row === 0 ? height - panelHeight : 0) : (rows - 1 - row) * panelHeight;
       if (!renderOutlines) {
         if (viewChanged) updateCamera(panel, panelWidth / panelHeight);
         panel.object.rotation.z = rotation.angle;
@@ -429,7 +455,9 @@ export async function createRotatingComparison(canvas, {
       renderer.setViewport(x, y, panelWidth, panelHeight);
       renderer.setScissor(x, y, panelWidth, panelHeight);
       renderer.setScissorTest(true);
+      if (staggered) renderer.autoClear = false;
       renderer.render(compositor.scene, compositor.camera);
+      if (staggered) renderer.autoClear = true;
     });
     renderer.setScissorTest(false);
     previousView = { azimuth, elevation };
@@ -439,6 +467,33 @@ export async function createRotatingComparison(canvas, {
   function tick(now) {
     render(now);
     frame = requestAnimationFrame(tick);
+  }
+
+  function scheduleStaticRender() {
+    if (!staticRunning || frame !== null) return;
+    frame = requestAnimationFrame((now) => {
+      frame = null;
+      render(now);
+    });
+  }
+
+  // 海报只在首次显示或尺寸改变时绘制，不注册鼠标拖动事件。
+  if (fixedAngle !== null) {
+    const observer = new ResizeObserver(scheduleStaticRender);
+    return {
+      start() {
+        if (staticRunning) return;
+        staticRunning = true;
+        observer.observe(canvas);
+        scheduleStaticRender();
+      },
+      stop() {
+        staticRunning = false;
+        observer.disconnect();
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+      },
+    };
   }
 
   canvas.addEventListener("pointerdown", (event) => {

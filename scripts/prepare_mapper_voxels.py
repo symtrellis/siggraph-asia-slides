@@ -1,4 +1,4 @@
-"""在 RTX 4090 上计算第十三页两种陀螺姿态共用的 32³ 表面占用网格。"""
+"""在 RTX 4090 上计算陀螺三个旋转姿态共用的 32³ 表面占用网格。"""
 
 import hashlib
 import json
@@ -97,6 +97,9 @@ def main():
     rotation = torch.tensor([[math.cos(angle), -math.sin(angle), 0], [math.sin(angle), math.cos(angle), 0], [0, 0, 1]], device=device)
     source_voxels = rasterize(triangles)
     target_voxels = rasterize(triangles @ rotation.T)
+    angle_240 = 4 * math.pi / 3
+    rotation_240 = torch.tensor([[math.cos(angle_240), -math.sin(angle_240), 0], [math.sin(angle_240), math.cos(angle_240), 0], [0, 0, 1]], device=device)
+    rotated_240_voxels = rasterize(triangles @ rotation_240.T)
     data = {
         "resolution": N,
         "lower": [LOWER] * 3,
@@ -107,10 +110,11 @@ def main():
         "device": torch.cuda.get_device_name(gpu),
         "source": source_voxels,
         "rotated": target_voxels,
+        "rotated_240": rotated_240_voxels,
     }
     path = MODELS / "mapper-voxels-32.json"
     path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
-    print(f"GPU: {data['device']}; 原姿态: {len(source_voxels)}; 旋转姿态: {len(target_voxels)}")
+    print(f"GPU: {data['device']}; 0°: {len(source_voxels)}; 120°: {len(target_voxels)}; 240°: {len(rotated_240_voxels)}")
     print(f"共用坐标系: [{LOWER}, {LOWER + SIDE}]³; 单元边长: {CELL}; {path}")
 
 

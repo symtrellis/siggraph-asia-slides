@@ -8,7 +8,7 @@ const idleSeconds = 5;
 const returnSeconds = 0.9;
 const defaultZoom = 1.15;
 
-export async function createMultiSymmetryScene(canvas) {
+export async function createMultiSymmetryScene(canvas, { staticComparison = false } = {}) {
   const loader = new GLTFLoader();
   const [manifest, segmentation, chair, texture] = await Promise.all([
     fetch(new URL("manifest.json", assets)).then(response => {
@@ -19,7 +19,7 @@ export async function createMultiSymmetryScene(canvas) {
     loader.loadAsync(new URL("symtrellis-chair.glb", assets).href),
     new EXRLoader().setDataType(THREE.HalfFloatType).loadAsync(hdri.href),
   ]);
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: staticComparison });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -124,7 +124,7 @@ export async function createMultiSymmetryScene(canvas) {
 
   function render(now) {
     if (renderer.getContext().isContextLost()) return;
-    updateView(now);
+    if (!staticComparison) updateView(now);
     const size = canvas.getBoundingClientRect();
     if (size.width < 2 || size.height < 2) return;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -158,6 +158,60 @@ export async function createMultiSymmetryScene(canvas) {
   function tick(now) {
     render(now);
     frame = requestAnimationFrame(tick);
+  }
+
+  // 海报复用原始相机与材质，仅在画布尺寸变化时绘制两个静态模型。
+  if (staticComparison) {
+    let active = false;
+    let retries = 0;
+    function drawStatic(now) {
+      frame = null;
+      if (!active || renderer.getContext().isContextLost()) return;
+      previous = null;
+      render(now);
+      const gl = renderer.getContext();
+      gl.finish();
+      const width = canvas.width;
+      const height = canvas.height;
+      const pixels = new Uint8Array(width * height * 4);
+      gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      const visible = [false, false];
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (pixels[(y * width + x) * 4 + 3] > 10) visible[x < width / 2 ? 0 : 1] = true;
+        }
+      }
+      if (!visible.every(Boolean) && retries < 5) {
+        retries++;
+        frame = requestAnimationFrame(drawStatic);
+      }
+    }
+    function invalidate() {
+      if (!active || frame !== null) return;
+      retries = 0;
+      frame = requestAnimationFrame(drawStatic);
+    }
+    const observer = new ResizeObserver(invalidate);
+    canvas.addEventListener("webglcontextrestored", () => {
+      environment.dispose();
+      environment = makeEnvironment();
+      scenes.forEach(scene => { scene.environment = environment.texture; });
+      invalidate();
+    });
+    return {
+      start() {
+        if (active) return;
+        active = true;
+        observer.observe(canvas);
+        invalidate();
+      },
+      stop() {
+        active = false;
+        observer.disconnect();
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+      },
+    };
   }
 
   canvas.addEventListener("pointerdown", event => {
