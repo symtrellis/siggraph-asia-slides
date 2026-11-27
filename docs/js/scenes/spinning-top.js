@@ -237,31 +237,34 @@ function makeCompositor(background, referenceColor, staggered) {
   return { scene, camera: new THREE.Camera(), uniforms };
 }
 
-export async function createSpinningTopScene(canvas, { staticComparison = false } = {}) {
+export async function createSpinningTopScene(canvas, {
+  staticComparison = false, outlinePixels = 1.05, rowsByMethod = false,
+} = {}) {
   const models = await loadModels();
   const material = new THREE.MeshStandardMaterial({
     color: 0xa79f96, metalness: 0.94, roughness: 0.24, side: THREE.DoubleSide,
   });
+  const items = [
+    { geometry: models[0], material, topView: true, fold: 3 },
+    { geometry: models[1], material, topView: true, fold: 3 },
+    { geometry: models[0], material, topView: false, fold: 3 },
+    { geometry: models[1], material, topView: false, fold: 3 },
+  ];
   return createRotatingComparison(canvas, {
     columns: 2,
     rows: 2,
-    outlinePixels: 1.05,
+    outlinePixels,
     fixedAngle: staticComparison ? -2 * Math.PI / 3 : null,
     staggered: staticComparison,
     background: staticComparison ? 0xffffff : CONFIG.background,
     referenceColor: staticComparison ? 0xd6a000 : CONFIG.yellow,
-    items: [
-      { geometry: models[0], material, topView: true, fold: 3 },
-      { geometry: models[1], material, topView: true, fold: 3 },
-      { geometry: models[0], material, topView: false, fold: 3 },
-      { geometry: models[1], material, topView: false, fold: 3 },
-    ],
+    items: rowsByMethod ? [items[0], items[2], items[1], items[3]] : items,
   });
 }
 
 // 第四页与第五页共用完全相同的灯光、轮廓计算和相机交互。
 export async function createRotatingComparison(canvas, {
-  columns, rows, outlinePixels, items, animated = true, idleSpinPeriodSeconds = 0,
+  columns, rows, outlinePixels: outlineWidth, items, animated = true, idleSpinPeriodSeconds = 0,
   renderOutlines = true,
   fixedAngle = null, background = CONFIG.background, referenceColor = CONFIG.yellow,
   staggered = false,
@@ -371,6 +374,7 @@ export async function createRotatingComparison(canvas, {
     updateIdleSpin(now);
     const size = canvas.getBoundingClientRect();
     if (size.width < 2 || size.height < 2) return;
+    const outlinePixels = typeof outlineWidth === "function" ? outlineWidth(size) : outlineWidth;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
     const width = columns * Math.max(1, Math.round(size.width * pixelRatio / columns));
     const height = rows * Math.max(1, Math.round(size.height * pixelRatio / rows));

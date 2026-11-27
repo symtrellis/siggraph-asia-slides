@@ -1,0 +1,556 @@
+{
+  "compression": "gltfpack 1.3.0, EXT_meshopt_compression; 16-bit positions and texture coordinates, 12-bit normals; attribute-aware simplification limited to 0.0015 error; 2048px JPEG PBR textures",
+  "axis_detection": "SymTRELLIS GPU ICP, 4096 samples, 128 iterations, initial Z axis",
+  "models": [
+    {
+      "fold": 9,
+      "file": "fold-09.glb",
+      "source_file": "04_gear_change_fold_09.glb",
+      "source_bytes": 51452476,
+      "bytes": 14068428,
+      "triangles": 681782,
+      "vertices": 688366,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7835648,
+          "compressed_bytes": 1939725,
+          "channel_rmse_8bit": [
+            2.1166999340057373,
+            1.833799958229065,
+            2.387700080871582
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4507812,
+          "compressed_bytes": 3360720,
+          "channel_rmse_8bit": [
+            1.6294000148773193,
+            1.8609999418258667,
+            3.0660998821258545
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "7ee0af885297505b19d6996e0ac653c50b8762810ffb823ed329d2a72941926b",
+      "axis_z_up": [
+        0.0016328077763319016,
+        0.0008958264370448887,
+        0.9999982714653015
+      ],
+      "axis_point_z_up": [
+        -0.0007044996018521488,
+        -0.00010666187881724909,
+        1.245862222276628e-06
+      ],
+      "tilt_from_z_degrees": 0.10653118044137955,
+      "icp_rmse": 0.012800495140254498,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "753600e1c1a4c4e8d307b1dcbe325608bf7bc37a51ada2e4e07bb3fa59581c68"
+    },
+    {
+      "fold": 10,
+      "file": "fold-10.glb",
+      "source_file": "04_gear_change_fold_10.glb",
+      "source_bytes": 48446472,
+      "bytes": 12812964,
+      "triangles": 673184,
+      "vertices": 632455,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7234916,
+          "compressed_bytes": 1671762,
+          "channel_rmse_8bit": [
+            2.0722999572753906,
+            1.722000002861023,
+            2.1303000450134277
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4251288,
+          "compressed_bytes": 3093710,
+          "channel_rmse_8bit": [
+            1.55840003490448,
+            1.8029999732971191,
+            2.8231000900268555
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "8ef979064afe0020241ea168cf66d6f9080c65ec247145bd33214ecfb0268ed0",
+      "axis_z_up": [
+        -0.0014523217687383294,
+        0.00041223751031793654,
+        0.9999988675117493
+      ],
+      "axis_point_z_up": [
+        0.00018614369037095457,
+        0.0007457158644683659,
+        -3.7071004044264555e-08
+      ],
+      "tilt_from_z_degrees": 0.08622923493385315,
+      "icp_rmse": 0.012584763579070568,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "501aa8bfc1360b33190abb600cd6162b1d23a3e36b0a32fe5bae03506d5389c2"
+    },
+    {
+      "fold": 11,
+      "file": "fold-11.glb",
+      "source_file": "04_gear_change_fold_11.glb",
+      "source_bytes": 50277700,
+      "bytes": 13631780,
+      "triangles": 668632,
+      "vertices": 678255,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7757248,
+          "compressed_bytes": 1910654,
+          "channel_rmse_8bit": [
+            2.180799961090088,
+            1.8547999858856201,
+            2.3443000316619873
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3832528,
+          "compressed_bytes": 3015959,
+          "channel_rmse_8bit": [
+            1.5477999448776245,
+            1.761299967765808,
+            2.6933000087738037
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "78817cb472597c10b5768995cd7c172ade12705ee1e32f72eb117ff4bf1af225",
+      "axis_z_up": [
+        0.001409113989211619,
+        -0.003143062349408865,
+        0.9999940991401672
+      ],
+      "axis_point_z_up": [
+        -0.0005766735412180424,
+        0.000530762190464884,
+        2.480834154994227e-06
+      ],
+      "tilt_from_z_degrees": 0.19683189690113068,
+      "icp_rmse": 0.013170949183404446,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "57bfba80ed86be05846d6ea383f218d41cffb995855f7951cd105ad823b99649"
+    },
+    {
+      "fold": 12,
+      "file": "fold-12.glb",
+      "source_file": "04_gear_change_fold_12.glb",
+      "source_bytes": 53929332,
+      "bytes": 15516884,
+      "triangles": 737248,
+      "vertices": 776477,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 8297440,
+          "compressed_bytes": 2107279,
+          "channel_rmse_8bit": [
+            2.435499906539917,
+            2.025099992752075,
+            2.4870998859405518
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4295144,
+          "compressed_bytes": 3362080,
+          "channel_rmse_8bit": [
+            1.6210999488830566,
+            1.8547999858856201,
+            3.0804998874664307
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "66ff3af480f893a4b54ddd435fc13be8ac85066abe920a719f5450d20d70e6fa",
+      "axis_z_up": [
+        0.001443177810870111,
+        -0.0009081782773137093,
+        0.9999985694885254
+      ],
+      "axis_point_z_up": [
+        -0.0003103446215391159,
+        0.0006022515590302646,
+        9.948344086296856e-07
+      ],
+      "tilt_from_z_degrees": 0.09691329300403595,
+      "icp_rmse": 0.014726277440786362,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "a3bb49c4a1d165eccb4fef87d3774a93acb74ce12bee64379bd08f961bb9f70c"
+    },
+    {
+      "fold": 13,
+      "file": "fold-13.glb",
+      "source_file": "04_gear_change_fold_13.glb",
+      "source_bytes": 50629292,
+      "bytes": 13536796,
+      "triangles": 669554,
+      "vertices": 692231,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7673632,
+          "compressed_bytes": 1818847,
+          "channel_rmse_8bit": [
+            1.9627000093460083,
+            1.7741999626159668,
+            2.108599901199341
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3810740,
+          "compressed_bytes": 2830629,
+          "channel_rmse_8bit": [
+            1.5963000059127808,
+            1.882599949836731,
+            2.544300079345703
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "e9feab24cc68fafcd1a0c027b4ca6c74b670ea8fb2254cfc8ad1238270fbc7c1",
+      "axis_z_up": [
+        -0.0014951233752071857,
+        0.0005665840581059456,
+        0.9999987483024597
+      ],
+      "axis_point_z_up": [
+        0.0004740952281281352,
+        -0.0008417721837759018,
+        1.1857673598569818e-06
+      ],
+      "tilt_from_z_degrees": 0.09065409004688263,
+      "icp_rmse": 0.01279466599225998,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "586f9146bfd9f72edc5befef39d79342b87b04e1caddf552c8100c6f50ba0d81"
+    },
+    {
+      "fold": 14,
+      "file": "fold-14.glb",
+      "source_file": "04_gear_change_fold_14.glb",
+      "source_bytes": 51076736,
+      "bytes": 14434032,
+      "triangles": 666556,
+      "vertices": 684311,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7628172,
+          "compressed_bytes": 1712056,
+          "channel_rmse_8bit": [
+            1.9702999591827393,
+            1.7275999784469604,
+            2.078700065612793
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4776300,
+          "compressed_bytes": 3947297,
+          "channel_rmse_8bit": [
+            1.8234000205993652,
+            1.9962999820709229,
+            3.049099922180176
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "9f830ad9b1e23adee49e3746b8c69d086e1c245af9625c7b19b467076aa2ce5c",
+      "axis_z_up": [
+        0.0010664390865713358,
+        -0.003507754532620311,
+        0.9999933242797852
+      ],
+      "axis_point_z_up": [
+        -0.0018236100440844893,
+        0.00018520833691582084,
+        2.5944464141502976e-06
+      ],
+      "tilt_from_z_degrees": 0.20935674011707306,
+      "icp_rmse": 0.012880489230155945,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "12b59d0840823d1b80f4faaa8b784f283c3cc64333c49f180169d6e1c32b1083"
+    },
+    {
+      "fold": 15,
+      "file": "fold-15.glb",
+      "source_file": "04_gear_change_fold_15.glb",
+      "source_bytes": 50276296,
+      "bytes": 13964384,
+      "triangles": 695039,
+      "vertices": 648617,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7367260,
+          "compressed_bytes": 1671489,
+          "channel_rmse_8bit": [
+            1.9681999683380127,
+            1.6914000511169434,
+            2.0534000396728516
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4718116,
+          "compressed_bytes": 4056817,
+          "channel_rmse_8bit": [
+            1.8651000261306763,
+            2.081899881362915,
+            3.11929988861084
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "b6ecbaa1a83685c4220c2374e2d7544899956f1811d4917a8caba951282e06e2",
+      "axis_z_up": [
+        0.0010549775324761868,
+        -0.002278236672282219,
+        0.9999969005584717
+      ],
+      "axis_point_z_up": [
+        -0.00043501396430656314,
+        0.0005298491450957954,
+        1.6660578694427386e-06
+      ],
+      "tilt_from_z_degrees": 0.14265252649784088,
+      "icp_rmse": 0.012674502097070217,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "22a350400d82a4f5e3773f3e30e905c7912bd776405743ec88355e8735ee4a67"
+    },
+    {
+      "fold": 16,
+      "file": "fold-16.glb",
+      "source_file": "04_gear_change_fold_16.glb",
+      "source_bytes": 50222832,
+      "bytes": 13644676,
+      "triangles": 675112,
+      "vertices": 658156,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7856744,
+          "compressed_bytes": 1860014,
+          "channel_rmse_8bit": [
+            2.063800096511841,
+            1.8228000402450562,
+            2.158099889755249
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4462308,
+          "compressed_bytes": 3409386,
+          "channel_rmse_8bit": [
+            1.6818000078201294,
+            1.9371999502182007,
+            3.035799980163574
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "780d70ac96e242081387c75bd7b8290568f148abbd4ee99dda1138d52cd34f28",
+      "axis_z_up": [
+        -0.0011887182481586933,
+        0.0006675976910628378,
+        0.9999991059303284
+      ],
+      "axis_point_z_up": [
+        -8.803287346381694e-05,
+        0.0020718537271022797,
+        -1.4878132787998766e-06
+      ],
+      "tilt_from_z_degrees": 0.07661668211221695,
+      "icp_rmse": 0.0131917679682374,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "7ef3e880559c599d09852782727457135afc080ffe052df0d56dc5cf0ab071c0"
+    },
+    {
+      "fold": 17,
+      "file": "fold-17.glb",
+      "source_file": "04_gear_change_fold_17.glb",
+      "source_bytes": 49783608,
+      "bytes": 13307672,
+      "triangles": 675306,
+      "vertices": 667831,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7596288,
+          "compressed_bytes": 1825175,
+          "channel_rmse_8bit": [
+            2.024399995803833,
+            1.7980999946594238,
+            2.13700008392334
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 3836960,
+          "compressed_bytes": 2912884,
+          "channel_rmse_8bit": [
+            1.5566999912261963,
+            1.9014999866485596,
+            2.7395999431610107
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "343e858833a1b8d3bee2b011fdaf0a9227635484887cc754b200ff8da9c367ee",
+      "axis_z_up": [
+        -0.0022348896600306034,
+        0.0022953455336391926,
+        0.9999948740005493
+      ],
+      "axis_point_z_up": [
+        0.0013800776796415448,
+        0.000308029557345435,
+        2.3773027351126075e-06
+      ],
+      "tilt_from_z_degrees": 0.1834539771080017,
+      "icp_rmse": 0.0134701794013381,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "24266d878881c81ba2fd7d2383b9602c6856d14bbcb664c2c1a6e3d42a42aa59"
+    },
+    {
+      "fold": 18,
+      "file": "fold-18.glb",
+      "source_file": "04_gear_change_fold_18.glb",
+      "source_bytes": 47722672,
+      "bytes": 12897268,
+      "triangles": 655676,
+      "vertices": 610283,
+      "textures": [
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 94,
+          "original_bytes": 7292348,
+          "compressed_bytes": 1609021,
+          "channel_rmse_8bit": [
+            1.9112999439239502,
+            1.6749000549316406,
+            1.9871000051498413
+          ]
+        },
+        {
+          "resolution": [
+            2048,
+            2048
+          ],
+          "quality": 96,
+          "original_bytes": 4555756,
+          "compressed_bytes": 3528706,
+          "channel_rmse_8bit": [
+            1.732800006866455,
+            1.9306000471115112,
+            2.8715999126434326
+          ]
+        }
+      ],
+      "target_ratio": 0.7,
+      "output_sha256": "ffe833a777d1ad110c1189752c6a4dbcad0e5b29d7c594b46c4f0ef678288a8f",
+      "axis_z_up": [
+        -0.0031990371644496918,
+        -0.0007377831498160958,
+        0.9999946355819702
+      ],
+      "axis_point_z_up": [
+        0.0006247095880098641,
+        0.00033940127468667924,
+        2.248889359179884e-06
+      ],
+      "tilt_from_z_degrees": 0.18767184019088745,
+      "icp_rmse": 0.01274323370307684,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "source_sha256": "87fba5d3228531078c6961ca1163755adafde72bd25b462f99b9fb679718d83b"
+    }
+  ]
+}

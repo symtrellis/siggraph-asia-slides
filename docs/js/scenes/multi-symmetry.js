@@ -88,6 +88,7 @@ export async function createMultiSymmetryScene(canvas, { staticComparison = fals
   let drag = null;
   let returning = null;
   let previous = null;
+  let redrawUntil = -Infinity;
 
   function cancelReturn() {
     if (!returning) return;
@@ -133,7 +134,7 @@ export async function createMultiSymmetryScene(canvas, { staticComparison = fals
     const width = panelWidth * 2;
     const resized = canvas.width !== width || canvas.height !== height;
     if (resized) renderer.setSize(width, height, false);
-    if (!resized && previous?.azimuth === azimuth && previous?.elevation === elevation &&
+    if (!resized && now >= redrawUntil && previous?.azimuth === azimuth && previous?.elevation === elevation &&
         previous?.zoom === zoom) return;
 
     const horizontal = distance * Math.cos(elevation);
@@ -239,7 +240,7 @@ export async function createMultiSymmetryScene(canvas, { staticComparison = fals
   canvas.addEventListener("pointercancel", endDrag);
   canvas.addEventListener("lostpointercapture", endDrag);
   canvas.addEventListener("wheel", event => {
-    if (canvas.closest(".slide").hidden) return;
+    if (canvas.closest(".slide")?.hidden) return;
     event.preventDefault();
     cancelReturn();
     const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? canvas.clientHeight : 1);
@@ -254,6 +255,10 @@ export async function createMultiSymmetryScene(canvas, { staticComparison = fals
   });
 
   return {
+    redraw(milliseconds = 0) {
+      previous = null;
+      redrawUntil = performance.now() + milliseconds;
+    },
     start() {
       if (frame !== null) return;
       azimuth = defaultAzimuth;

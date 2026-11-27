@@ -38,7 +38,7 @@ async function loadModel(loader, entry) {
   return { geometry, material, fold: entry.fold, topView: false };
 }
 
-export async function createShapeGallery(canvas) {
+export async function createShapeGallery(canvas, { outlinePixels = 0.82 } = {}) {
   const response = await fetch(new URL("manifest.json?v=compressed-pbr-final", assets));
   if (!response.ok) throw new Error(`对比模型参数读取失败：${response.status}`);
   const { models } = await response.json();
@@ -65,7 +65,7 @@ export async function createShapeGallery(canvas) {
   return createRotatingComparison(canvas, {
     columns: examples.length,
     rows: 2,
-    outlinePixels: 0.82,
+    outlinePixels,
     items: [...upper, ...lower],
   });
 }

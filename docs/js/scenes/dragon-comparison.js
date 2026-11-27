@@ -78,9 +78,14 @@ async function loadDragon(loader, file, material) {
   return new THREE.Mesh(geometry, material);
 }
 
-export async function createDragonComparison(canvas, { staticComparison = false } = {}) {
+export async function createDragonComparison(canvas, {
+  staticComparison = false, combinedComparison = false, interactionContainer,
+} = {}) {
   const isMapperComparison = canvas.hasAttribute("data-mapper-comparison");
-  const files = isMapperComparison ? mapperComparisonFiles : poseComparisonFiles;
+  const files = combinedComparison
+    ? [...poseComparisonFiles.slice(0, 3), mapperComparisonFiles[1],
+       ...poseComparisonFiles.slice(3), mapperComparisonFiles[3]]
+    : isMapperComparison ? mapperComparisonFiles : poseComparisonFiles;
   const columns = files.length / 2;
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: staticComparison });
   renderer.setPixelRatio(1);
@@ -186,7 +191,8 @@ export async function createDragonComparison(canvas, { staticComparison = false 
 
     // 所有窗口使用相同纵向视野和透视参数，较宽的窗口自然扩展横向视野。
     camera.aspect = panelWidth / panelHeight;
-    camera.zoom = defaultZoom * zoomFactor;
+    const aspectFit = combinedComparison ? Math.min(1.12, camera.aspect * 1.08) : 1;
+    camera.zoom = defaultZoom * zoomFactor * aspectFit;
     camera.updateProjectionMatrix();
     if (isMapperComparison) {
       // 四个模型统一使用更紧的取景，补偿完整环绕时纵向投影范围的不对称。
@@ -362,7 +368,7 @@ export async function createDragonComparison(canvas, { staticComparison = false 
   canvas.addEventListener("pointercancel", endDrag);
   canvas.addEventListener("lostpointercapture", endDrag);
   // 两页的鼠标滚轮与 Chromium 触摸板捏合共用相机缩放。
-  const slide = canvas.closest(".slide");
+  const slide = interactionContainer ?? canvas.closest(".slide");
   slide.addEventListener("wheel", (event) => {
     if (slide.hidden) return;
     event.preventDefault();

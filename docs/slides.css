@@ -255,11 +255,25 @@ body {
   text-align: center;
 }
 
-.fold-manipulation-gallery img {
+.fold-model-view {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  min-height: 0;
+}
+
+.fold-gallery-views {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.fold-gallery-views:active {
+  cursor: grabbing;
 }
 
 .fold-manipulation-gallery figcaption {

@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SymTRELLIS: Symmetry-Enforced Voxel Latents for 3D Generation</title>
+  <script type="importmap">
+    { "imports": { "three": "../vendor/three/build/three.module.min.js" } }
+  </script>
+  <style>
+    @font-face {
+      font-family: "Linux Libertine";
+      src: url("../assets/fonts/LinLibertine_R.otf") format("opentype");
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Linux Biolinum";
+      src: url("../assets/fonts/LinBiolinum_R.otf") format("opentype");
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: grid;
+      min-height: 100dvh;
+      margin: 0;
+      place-items: center;
+      overflow: hidden;
+      background: #141414;
+      color: #f1eeea;
+      font-family: "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .electronic-poster {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      width: min(100vw, calc(100dvh * 16 / 9));
+      aspect-ratio: 16 / 9;
+      container-type: inline-size;
+      overflow: hidden;
+      background: #141414;
+    }
+
+    .poster-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) max-content;
+      align-items: center;
+      padding: 0.5cqw 2cqw 0.45cqw;
+      row-gap: 0.22cqw;
+      column-gap: 1cqw;
+      background: #a6192e;
+      color: #fff;
+    }
+
+    .poster-title {
+      grid-column: 1;
+      grid-row: 1;
+      margin: 0;
+      font: 400 1.95cqw / 1.08 "Linux Libertine", Georgia, serif;
+      white-space: nowrap;
+    }
+
+    .authors {
+      grid-column: 1;
+      grid-row: 2;
+      margin: 0;
+      font: 400 1.35cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    .authors sup {
+      font-size: 0.62em;
+      line-height: 0;
+      vertical-align: super;
+    }
+
+    .institution-logos {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-end;
+      gap: 0.85cqw;
+    }
+
+    .institution-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.4cqw;
+      padding: 0.35cqw 0 0 0.65cqw;
+      flex: none;
+    }
+
+    .institution-index {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font: 400 0.7cqw / 1 "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .institution-logos img {
+      display: block;
+      flex: none;
+    }
+
+    .sfu-logo-wrap {
+      position: relative;
+      width: 6.25cqw;
+      height: 3.41cqw;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .sfu-logo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 10.9cqw;
+      height: auto;
+    }
+
+    .gruvi-logo {
+      width: 6.3cqw;
+      height: auto;
+    }
+
+    .augmenta-logo {
+      width: 12cqw;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .shanghaitech-logo {
+      width: 13cqw;
+      height: auto;
+    }
+
+    .poster-content {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0.6cqw;
+      min-height: 0;
+      padding: 0.8cqw 1.5cqw 1cqw;
+    }
+
+    .introduction {
+      grid-column: 1;
+      align-self: stretch;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 19.5cqw) minmax(13.5cqw, 1fr);
+      gap: 0.45cqw;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .middle-column {
+      grid-column: 2;
+      align-self: stretch;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.9cqw;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .right-column {
+      grid-column: 3;
+      align-self: stretch;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 0.9cqw;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .velocity-symmetrization,
+    .latent-mapper,
+    .fold-manipulation,
+    .multi-symmetry,
+    .visuals-section {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 0.45cqw;
+      min-width: 0;
+    }
+
+    .latent-mapper {
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 0.25cqw;
+      min-height: 0;
+    }
+
+    .visuals-section {
+      grid-template-rows: auto minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .section-heading {
+      margin: 0;
+      width: max-content;
+      padding: 0.12cqw 0.8cqw;
+      background: #a6192e;
+      color: #fff;
+      font: 400 1.35cqw / 1.12 "Linux Libertine", Georgia, serif;
+    }
+
+    .intro-text {
+      font: 400 0.8cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+      color: #f1eeea;
+      padding: 0;
+    }
+
+    .intro-text p {
+      margin: 0 0 0.35cqw;
+    }
+
+    .intro-text ul {
+      margin: 0;
+      padding-left: 0.8cqw;
+    }
+
+    .intro-text li {
+      margin-bottom: 0.2cqw;
+    }
+
+    .poster-panel {
+      grid-column: 1;
+      display: grid;
+      grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+      place-items: center;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      container-type: size;
+      cursor: zoom-in;
+    }
+
+    .electronic-poster:has(.poster-panel.is-expanded) {
+      visibility: hidden;
+    }
+
+    .poster-panel.is-expanded {
+      position: absolute;
+      grid-column: auto;
+      grid-row: auto;
+      inset: 0;
+      z-index: 10;
+      visibility: visible;
+      background: #141414;
+      cursor: zoom-out;
+    }
+
+    .spinning-top-panel {
+      grid-row: 3;
+    }
+
+    .shape-gallery-panel {
+      grid-row: 4;
+    }
+
+    .fold-panel,
+    .multi-panel {
+      position: relative;
+      grid-row: 2;
+      width: 100%;
+    }
+
+    .fold-panel {
+      aspect-ratio: 2.15;
+    }
+
+    .multi-panel {
+      aspect-ratio: 2.7;
+    }
+
+    .fold-panel.is-expanded,
+    .multi-panel.is-expanded {
+      aspect-ratio: auto;
+    }
+
+    .electronic-fold-grid {
+      position: relative;
+      width: 100%;
+      height: 100cqh;
+      display: grid;
+      grid-template: repeat(2, minmax(0, 1fr)) / repeat(5, minmax(0, 1fr));
+      gap: 0.5cqw 0.4cqw;
+      min-height: 0;
+    }
+
+    .electronic-fold-grid figure {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      margin: 0;
+      text-align: center;
+      white-space: nowrap;
+      font: 400 2.7cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .electronic-fold-grid [data-fold-model] {
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .electronic-fold-views {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .electronic-fold-views:active {
+      cursor: grabbing;
+    }
+
+    .multi-comparison {
+      display: grid;
+      grid-template: minmax(0, 1fr) auto / repeat(3, minmax(0, 1fr));
+      width: 100%;
+      height: 100cqh;
+      gap: 0.5cqw 0;
+      min-height: 0;
+      text-align: center;
+      white-space: nowrap;
+      font: 400 2.7cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .multi-panel.is-expanded .multi-comparison {
+      width: 94cqw;
+      height: 82cqh;
+    }
+
+    .multi-symmetry-image {
+      grid-area: 1 / 1;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .multi-symmetry-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.15);
+    }
+
+    .multi-symmetry-views {
+      grid-area: 1 / 2 / 2 / 4;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .multi-symmetry-views:active {
+      cursor: grabbing;
+    }
+
+    .visuals-panel {
+      grid-row: 2;
+      width: 100%;
+      height: 100%;
+    }
+
+    .electronic-visuals-views {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .electronic-visuals-views:active {
+      cursor: grabbing;
+    }
+
+    .velocity-panel {
+      grid-row: 2;
+      width: 100%;
+      aspect-ratio: 930 / 404;
+    }
+
+    .velocity-video {
+      display: block;
+      /* 去掉 960×540 视频外部的空白，保留全部动画的有效范围。 */
+      align-self: start;
+      justify-self: start;
+      width: calc(960 / 930 * 100%);
+      height: auto;
+      aspect-ratio: 16 / 9;
+      transform: translate(-2.2916667%, -12.5925926%);
+      object-fit: contain;
+    }
+
+    .velocity-panel.is-expanded {
+      aspect-ratio: auto;
+    }
+
+    .velocity-panel.is-expanded .velocity-video {
+      width: 100%;
+      height: 100%;
+      transform: none;
+      object-fit: contain;
+    }
+
+    .mapper-panel {
+      position: relative;
+      grid-row: 2;
+      width: 100%;
+      aspect-ratio: 2.3;
+      --mapper-green: #96cd79;
+    }
+
+    .mapper-panel.is-expanded {
+      aspect-ratio: auto;
+    }
+
+    .dragon-panel {
+      grid-row: 3;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dragon-comparison {
+      display: grid;
+      grid-template: auto minmax(0, 1fr) / min(4.5cqw, 7.2cqh) minmax(0, 1fr);
+      width: 100%;
+      height: 100cqh;
+      min-height: 0;
+    }
+
+    .dragon-comparison-columns {
+      grid-area: 1 / 2;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      text-align: center;
+      white-space: nowrap;
+      font: 400 min(3cqw, 6.5cqh) / 1.2 "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .dragon-comparison-rows {
+      grid-area: 2 / 1;
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      font: 400 min(3cqw, 6.5cqh) / 1.2 "Linux Biolinum", Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    .dragon-comparison-rows span {
+      place-self: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .dragon-comparison-views {
+      grid-area: 2 / 2;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .dragon-comparison-views:active {
+      cursor: grabbing;
+    }
+
+    .mapper-intro-view {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .mapper-panel:not(.is-expanded) .mapper-intro-view {
+      /* 缩略动画裁去顶部空白，不改变放大后的完整画面。 */
+      top: -10%;
+      bottom: auto;
+      height: 110%;
+      mask-image: var(--mapper-edge-mask, none);
+      mask-mode: alpha;
+      mask-composite: intersect;
+      mask-repeat: no-repeat;
+    }
+
+    .mapper-panel.is-expanded .mapper-intro-view {
+      mask-image: none;
+    }
+
+    .mapper-neighborhood-equations {
+      position: absolute;
+      left: 52.5cqw;
+      right: 3.2cqw;
+      top: 42.5%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .mapper-method-name {
+      position: absolute;
+      left: 52.5cqw;
+      right: 3.2cqw;
+      top: 73%;
+      margin: 0;
+      color: var(--mapper-green);
+      text-align: left;
+      white-space: nowrap;
+      font: 400 3cqw / 1.2 "Linux Biolinum", Arial, sans-serif;
+      pointer-events: none;
+    }
+
+    .mapper-equation-rows {
+      display: grid;
+      gap: 2.6cqw;
+    }
+
+    .mapper-panel.is-expanded .mapper-neighborhood-equations {
+      top: 45%;
+    }
+
+    .mapper-equation-rows svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .mapper-equation-glyph {
+      fill: #f1eeea;
+      transition: fill 0.35s ease-out;
+    }
+
+    .mapper-panel:has(.mapper-method-name:not([hidden])) .mapper-equation-glyph {
+      fill: var(--mapper-green);
+    }
+
+    .mapper-panel.is-expanded .mapper-method-name {
+      top: 68%;
+    }
+
+    .mapper-neighborhood-equations:not([hidden]),
+    .mapper-method-name:not([hidden]) {
+      animation: mapper-text-in 0.35s ease-out both;
+    }
+
+    @keyframes mapper-text-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .intro-comparison {
+      display: grid;
+      grid-template-columns: min(4.3cqw, 6cqh) repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      height: 100cqh;
+      min-height: 0;
+    }
+
+    .spinning-top-names,
+    .shape-gallery-labels,
+    .video-pair {
+      display: grid;
+      grid-row: 1 / 3;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      min-height: 0;
+    }
+
+    .spinning-top-names,
+    .shape-gallery-labels {
+      grid-column: 1;
+      text-align: center;
+      white-space: nowrap;
+      font: 400 min(2.6cqw, 5.7cqh) / 1.2 "Linux Biolinum", Arial, sans-serif;
+    }
+
+    .spinning-top-names span,
+    .shape-gallery-labels span {
+      place-self: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .video-pair {
+      grid-column: 2;
+      justify-items: center;
+    }
+
+    .video-pair video {
+      display: block;
+      width: min(100%, 38cqh);
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .spinning-top-views {
+      grid-column: 3 / 5;
+      grid-row: 1 / 3;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .spinning-top-views:active {
+      cursor: grabbing;
+    }
+
+    .shape-comparison {
+      display: grid;
+      grid-template-columns: min(4.3cqw, 6cqh) minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      height: 100cqh;
+      min-height: 0;
+    }
+
+    .shape-gallery-views {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .shape-gallery-views:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body>
+  <main class="electronic-poster">
+    <header class="poster-header">
+      <h1 class="poster-title">SymTRELLIS: Symmetry-Enforced Voxel Latents for 3D Generation</h1>
+      <p class="authors">Guangda Ji<sup>1</sup>, Qimin Chen<sup>1</sup>, Qinchan Li<sup>1</sup>, Mingrui Zhao<sup>1</sup>, Kai Wang<sup>1,2</sup>, Hao Zhang<sup>1,3</sup></p>
+      <div class="institution-logos">
+        <div class="institution-group">
+          <span class="institution-index">1</span>
+          <div class="sfu-logo-wrap"><img class="sfu-logo" src="../assets/images/SFU_block_colour_rgb.svg" alt="SFU"></div>
+          <img class="gruvi-logo" src="../assets/images/gruvi-mark-white.svg" alt="GrUVi">
+        </div>
+        <div class="institution-group">
+          <span class="institution-index">2</span>
+          <img class="shanghaitech-logo" src="../assets/images/shanghaitech-logo-white.svg" alt="ShanghaiTech University">
+        </div>
+        <div class="institution-group">
+          <span class="institution-index">3</span>
+          <img class="augmenta-logo" src="../assets/images/augmenta-logo.svg" alt="Augmenta">
+        </div>
+      </div>
+    </header>
+    <div class="poster-content">
+      <section class="introduction" aria-labelledby="introduction-heading">
+        <h2 class="section-heading" id="introduction-heading">Introduction</h2>
+        <div class="intro-text">
+          <p>We propose a symmetry-enforcement method for voxel-based 3D generation models.</p>
+          <ul>
+            <li>Symmetry is enforced during flow generation, not through post-processing.</li>
+            <li>Our method supports arbitrary finite 3D point-group symmetries.</li>
+            <li>We do not need to retrain the flow model or VAE, nor do we use generation-time optimization.</li>
+            <li>We train a lightweight <strong>spatial-transform latent mapper</strong> to average rotated voxel latents.</li>
+            <li>Our method does not require the preparation of symmetric training data.</li>
+          </ul>
+        </div>
+        <div class="poster-panel spinning-top-panel" aria-label="陀螺视频与三维模型对比">
+          <div class="intro-comparison">
+            <div class="spinning-top-names">
+              <span>vanilla TRELLIS.2</span>
+              <span>SymTRELLIS (Ours)</span>
+            </div>
+            <div class="video-pair">
+              <video data-source="../assets/videos/trellis2_kalman_crop.mp4" preload="auto" muted playsinline aria-label="TRELLIS.2"></video>
+              <video data-source="../assets/videos/symtrellis_kalman_crop.mp4" preload="auto" muted playsinline aria-label="SymTRELLIS"></video>
+            </div>
+            <canvas class="spinning-top-views" aria-label="两种陀螺模型的俯视图和斜视图"></canvas>
+          </div>
+        </div>
+        <div class="poster-panel shape-gallery-panel" aria-label="四组模型的旋转对比">
+          <div class="shape-comparison">
+            <div class="shape-gallery-labels">
+              <span>vanilla TRELLIS.2</span>
+              <span>SymTRELLIS (Ours)</span>
+            </div>
+            <canvas class="shape-gallery-views" aria-label="四组模型的旋转对比"></canvas>
+          </div>
+        </div>
+      </section>
+      <div class="middle-column">
+        <section class="velocity-symmetrization" aria-labelledby="velocity-heading">
+          <h2 class="section-heading" id="velocity-heading">Velocity Symmetrization</h2>
+          <div class="poster-panel velocity-panel" aria-label="速度对称化动画">
+            <video class="velocity-video" data-source="../assets/videos/flow-matching-spinning-top.mp4"
+                   preload="auto" autoplay muted loop playsinline aria-label="流匹配中的速度对称化动画"></video>
+          </div>
+        </section>
+        <section class="latent-mapper" aria-labelledby="mapper-heading">
+          <h2 class="section-heading" id="mapper-heading">Spatial-Transform Latent Mapper</h2>
+          <div class="poster-panel mapper-panel" aria-label="空间变换潜变量映射动画">
+            <canvas class="mapper-intro-view" aria-label="陀螺旋臂局部特征演示"></canvas>
+            <div class="mapper-neighborhood-equations" role="img"
+                 aria-label="蓝色体素的特征是红色邻域特征的加权变换之和；权重与变换系数由空间变换神经网络输出" hidden>
+              <div class="mapper-equation-rows" aria-hidden="true">
+                <svg viewBox="41.5 -0.6 186.06 34">
+                  <image href="../assets/images/mapper-neighborhood-equations.svg" width="172.7" height="56.835"/>
+                </svg>
+                <svg viewBox="0.2 45.5 132.9 11.2">
+                  <defs>
+                    <mask id="mapper-equation-symbol-mask" x="0" y="0" width="172.7" height="56.835"
+                          maskUnits="userSpaceOnUse" style="mask-type: alpha">
+                      <image href="../assets/images/mapper-symbol-mask.svg" width="172.7" height="56.835"/>
+                    </mask>
+                  </defs>
+                  <image href="../assets/images/mapper-neighborhood-equations.svg" width="172.7" height="56.835"/>
+                  <rect class="mapper-equation-glyph" width="172.7" height="56.835"
+                        mask="url(#mapper-equation-symbol-mask)"/>
+                </svg>
+              </div>
+            </div>
+            <p class="mapper-method-name" hidden>Spatial-Transform Latent Mapper</p>
+          </div>
+          <div class="poster-panel dragon-panel" aria-label="原始姿态、旋转姿态、最近邻及 Mapper 的龙模型对比">
+            <div class="dragon-comparison">
+              <div class="dragon-comparison-columns">
+                <span>Original pose</span>
+                <span>Rotated pose</span>
+                <span>Nearest neighbor</span>
+                <span>Mapper</span>
+              </div>
+              <div class="dragon-comparison-rows">
+                <span>Active voxel</span>
+                <span>Shape latent</span>
+              </div>
+              <canvas class="dragon-comparison-views" aria-label="两种潜变量的四列龙模型对比"></canvas>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="right-column">
+        <section class="fold-manipulation" aria-labelledby="fold-heading">
+          <h2 class="section-heading" id="fold-heading">Fold Manipulation</h2>
+          <div class="poster-panel fold-panel" aria-label="九阶至十八阶齿轮的旋转展示">
+            <div class="electronic-fold-grid">
+              <figure><div data-fold-model="9"></div><figcaption>9 Fold</figcaption></figure>
+              <figure><div data-fold-model="10"></div><figcaption>10 Fold</figcaption></figure>
+              <figure><div data-fold-model="11"></div><figcaption>11 Fold</figcaption></figure>
+              <figure><div data-fold-model="12"></div><figcaption>12 Fold</figcaption></figure>
+              <figure><div data-fold-model="13"></div><figcaption>13 Fold</figcaption></figure>
+              <figure><div data-fold-model="14"></div><figcaption>14 Fold</figcaption></figure>
+              <figure><div data-fold-model="15"></div><figcaption>15 Fold</figcaption></figure>
+              <figure><div data-fold-model="16"></div><figcaption>16 Fold</figcaption></figure>
+              <figure><div data-fold-model="17"></div><figcaption>17 Fold</figcaption></figure>
+              <figure><div data-fold-model="18"></div><figcaption>18 Fold</figcaption></figure>
+              <canvas class="electronic-fold-views" aria-label="十个齿轮三维模型"></canvas>
+            </div>
+          </div>
+        </section>
+        <section class="multi-symmetry" aria-labelledby="multi-heading">
+          <h2 class="section-heading" id="multi-heading">Multi-Symmetry</h2>
+          <div class="poster-panel multi-panel" aria-label="多重对称约束的椅子展示">
+            <div class="multi-comparison">
+              <div class="multi-symmetry-image">
+                <img src="../assets/images/multi-symmetry-input.webp" width="1024" height="1024" alt="转椅的输入图片">
+              </div>
+              <canvas class="multi-symmetry-views" aria-label="空间分割与 SymTRELLIS 椅子的交互三维视图"></canvas>
+              <span>Input image</span>
+              <span>Space segmentation</span>
+              <span>SymTRELLIS</span>
+            </div>
+          </div>
+        </section>
+        <section class="visuals-section" aria-labelledby="visuals-heading">
+          <h2 class="section-heading" id="visuals-heading">Visuals</h2>
+          <div class="poster-panel visuals-panel" aria-label="八个 SymTRELLIS 模型的旋转展示">
+            <canvas class="electronic-visuals-views" aria-label="八个模型按各自对称阶旋转"></canvas>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script type="module">
+    import { createSpinningTopScene } from "../js/scenes/spinning-top.js";
+    import { createShapeGallery } from "../js/scenes/shape-gallery.js?v=compressed-pbr-final";
+    import { createMapperIntro } from "../js/scenes/mapper-intro.js";
+    import { createDragonComparison } from "../js/scenes/dragon-comparison.js?v=shared-zoom-return";
+    import { createFoldGallery } from "../js/scenes/fold-gallery.js";
+    import { createMultiSymmetryScene } from "../js/scenes/multi-symmetry.js";
+    import { createVisualsGallery } from "../js/scenes/visuals-gallery.js?v=1";
+
+    const panels = document.querySelectorAll(".poster-panel");
+    for (const panel of panels) {
+      let pointerStart = null;
+      let moved = false;
+      panel.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        pointerStart = { x: event.clientX, y: event.clientY };
+        moved = false;
+      });
+      panel.addEventListener("pointermove", (event) => {
+        if (pointerStart && Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > 6) {
+          moved = true;
+        }
+      });
+      panel.addEventListener("pointerup", () => { pointerStart = null; });
+      panel.addEventListener("pointercancel", () => { pointerStart = null; moved = true; });
+      panel.addEventListener("click", () => {
+        if (moved) return;
+        const expand = !panel.classList.contains("is-expanded");
+        panels.forEach((other) => other.classList.remove("is-expanded"));
+        panel.classList.toggle("is-expanded", expand);
+      });
+    }
+
+    const videos = Array.from(document.querySelectorAll(".video-pair video"));
+
+    async function loadVideo(video) {
+      const source = new URL(video.dataset.source, document.baseURI);
+      // 与幻灯片一致：本地服务器不支持分段请求时，用完整视频保证循环和跳转正常。
+      try {
+        const response = await fetch(source, { headers: { Range: "bytes=0-0" } });
+        if (response.status === 200) {
+          video.src = URL.createObjectURL(await response.blob());
+          return;
+        }
+        await response.body?.cancel();
+      } catch {
+        // 由视频元素直接读取原文件。
+      }
+      video.src = source.href;
+    }
+
+    function waitUntilPlayable(video) {
+      if (video.error) return Promise.reject(video.error);
+      if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const events = new AbortController();
+        function checkReady() {
+          if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+            events.abort();
+            resolve();
+          }
+        }
+        video.addEventListener("canplay", checkReady, { signal: events.signal });
+        video.addEventListener("seeked", checkReady, { signal: events.signal });
+        video.addEventListener("error", () => {
+          events.abort();
+          reject(video.error);
+        }, { signal: events.signal });
+      });
+    }
+
+    async function startComparisonVideos() {
+      await Promise.all(videos.map(async (video) => {
+        video.muted = true;
+        await loadVideo(video);
+        await waitUntilPlayable(video);
+      }));
+
+      const master = videos.reduce((longer, video) => video.duration > longer.duration ? video : longer);
+      const follower = videos.find((video) => video !== master);
+      let restarting = false;
+
+      async function restartTogether() {
+        if (restarting) return;
+        restarting = true;
+        try {
+          for (const video of videos) {
+            video.pause();
+            video.playbackRate = 1;
+            video.currentTime = 0;
+          }
+          await Promise.all(videos.map(waitUntilPlayable));
+          await Promise.all(videos.map((video) => video.play()));
+        } finally {
+          restarting = false;
+        }
+      }
+
+      function synchronize() {
+        if (!restarting && !master.paused && !master.seeking) {
+          // 较短的视频自然播放到最后一帧，随后等待共同的下一轮循环。
+          if (master.currentTime < follower.duration - 0.05) {
+            const drift = follower.currentTime - master.currentTime;
+            if (!follower.seeking && Math.abs(drift) > 0.12) {
+              follower.currentTime = master.currentTime;
+            } else {
+              follower.playbackRate = Math.max(0.9, Math.min(1.1, 1 - drift * 0.8));
+            }
+            if (follower.paused && !follower.ended && !follower.seeking) {
+              void follower.play().catch(console.error);
+            }
+          } else {
+            follower.playbackRate = 1;
+          }
+        }
+        requestAnimationFrame(synchronize);
+      }
+
+      master.addEventListener("ended", () => { void restartTogether().catch(console.error); });
+      await restartTogether();
+      requestAnimationFrame(synchronize);
+    }
+
+    void startComparisonVideos().catch((error) => console.error("陀螺视频加载失败", error));
+    const velocityVideo = document.querySelector(".velocity-video");
+    void loadVideo(velocityVideo)
+      .then(() => waitUntilPlayable(velocityVideo))
+      .then(() => velocityVideo.play())
+      .catch((error) => console.error("速度对称化动画加载失败", error));
+
+    async function playMapperIntroLoop() {
+      const panel = document.querySelector(".mapper-panel");
+      const equations = panel.querySelector(".mapper-neighborhood-equations");
+      const method = panel.querySelector(".mapper-method-name");
+      const canvas = panel.querySelector(".mapper-intro-view");
+      function updateEdgeFade({ localZoom, merge }) {
+        if (localZoom === 0) {
+          canvas.style.removeProperty("--mapper-edge-mask");
+          return;
+        }
+        const edgeOpacity = 1 - localZoom;
+        const seamBlend = Math.min(1, merge / 0.35);
+        const seamOpacity = 1 - localZoom * (1 - seamBlend * seamBlend * (3 - 2 * seamBlend));
+        const rightEdge = 100 - 46 * merge;
+        const edge = `rgba(0, 0, 0, ${edgeOpacity})`;
+        const seam = `rgba(0, 0, 0, ${seamOpacity})`;
+        // 放大时每个视窗有独立的边缘；融合后只保留合并视窗的外边缘。
+        canvas.style.setProperty("--mapper-edge-mask", [
+          `linear-gradient(90deg, ${edge} 0%, #000 5.5%, #000 ${rightEdge - 5.5}%, ${edge} ${rightEdge}%, transparent ${rightEdge}%, transparent 100%)`,
+          `linear-gradient(180deg, ${edge} 9.0909091%, #000 19.0909091%, #000 90%, ${edge} 100%)`,
+          `linear-gradient(90deg, #000 0%, #000 44.5%, ${seam} 50%, #000 55.5%, #000 100%)`,
+        ].join(", "));
+      }
+      const scene = await createMapperIntro(canvas, { onViewState: updateEdgeFade });
+      const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+      const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+
+      while (true) {
+        scene.stop();
+        equations.hidden = true;
+        method.hidden = true;
+        for (let stage = 0; stage < scene.stageCount; stage++) {
+          panel.dataset.stage = String(stage);
+          scene.start(stage);
+          await nextFrame();
+          while (scene.isTransitioning) await nextFrame();
+          await delay(stage === 0 ? 600 : 300);
+        }
+        panel.dataset.stage = String(scene.stageCount);
+        equations.hidden = false;
+        await delay(1100);
+        panel.dataset.stage = String(scene.stageCount + 1);
+        method.hidden = false;
+        await delay(2000);
+      }
+    }
+
+    void playMapperIntroLoop().catch((error) => console.error("空间变换潜变量映射动画加载失败", error));
+
+    const dragonPanel = document.querySelector(".dragon-panel");
+    void createDragonComparison(dragonPanel.querySelector(".dragon-comparison-views"), {
+      combinedComparison: true,
+      interactionContainer: dragonPanel,
+    })
+      .then((scene) => scene.start())
+      .catch((error) => console.error("龙模型对比加载失败", error));
+
+    void createFoldGallery(document.querySelector(".electronic-fold-views"))
+      .then((scene) => scene.start())
+      .catch((error) => console.error("齿轮 Fold Manipulation 展示加载失败", error));
+
+    const multiSceneReady = createMultiSymmetryScene(document.querySelector(".multi-symmetry-views"))
+      .then((scene) => { scene.start(); return scene; })
+      .catch((error) => console.error("Multi-Symmetry 展示加载失败", error));
+
+    const visualsSceneReady = createVisualsGallery(document.querySelector(".electronic-visuals-views"))
+      .then((scene) => { scene.start(); return scene; })
+      .catch((error) => console.error("Visuals 模型展示加载失败", error));
+
+    void Promise.all([multiSceneReady, visualsSceneReady]).then(([scene]) => {
+      scene?.redraw(750);
+    });
+
+    const poster = document.querySelector(".electronic-poster");
+    void createSpinningTopScene(document.querySelector(".spinning-top-views"), {
+      rowsByMethod: true,
+      outlinePixels: ({ height }) => {
+        // 缩略展示和放大展示分别使用与显示尺寸相适应的轮廓线宽。
+        const fullSizeHeight = poster.clientHeight * 0.82;
+        return Math.max(0.25, Math.min(1.05, 1.05 * height / fullSizeHeight));
+      },
+    })
+      .then((scene) => scene.start())
+      .catch((error) => console.error("陀螺三维展示加载失败", error));
+
+    void createShapeGallery(document.querySelector(".shape-gallery-views"), {
+      outlinePixels: ({ height }) => {
+        const fullSizeHeight = poster.clientHeight * 0.82;
+        return Math.max(0.2, Math.min(0.82, 0.82 * height / fullSizeHeight));
+      },
+    })
+      .then((scene) => scene.start())
+      .catch((error) => console.error("四组模型展示加载失败", error));
+  </script>
+</body>
+</html>

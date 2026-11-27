@@ -333,6 +333,7 @@
       align-items: start;
     }
     .poster-fold-gallery {
+      position: relative;
       width: 100%;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -346,11 +347,20 @@
       font: 400 1.3423cqw / 1.25 "Open Sans", Arial, sans-serif;
       color: #202124;
     }
-    .poster-fold-gallery img {
+    .poster-fold-gallery img,
+    .poster-fold-model-view {
       display: block;
       width: 100%;
       height: 9.5cqw;
       object-fit: contain;
+    }
+    .poster-fold-views {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
     .poster-fold-gallery figcaption {
       white-space: nowrap;
@@ -813,14 +823,15 @@
         <h2 class="module-heading">Fold Manipulation</h2>
         <div class="poster-fold-gallery">
         <figure><img src="./assets/images/fold-manipulation/input-image.webp" alt="原始齿轮输入图片"><figcaption>Input image</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-09.webp" alt="9 Fold 齿轮"><figcaption>9 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-10.webp" alt="10 Fold 齿轮"><figcaption>10 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-11.webp" alt="11 Fold 齿轮"><figcaption>11 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-13.webp" alt="13 Fold 齿轮"><figcaption>13 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-14.webp" alt="14 Fold 齿轮"><figcaption>14 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-15.webp" alt="15 Fold 齿轮"><figcaption>15 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-17.webp" alt="17 Fold 齿轮"><figcaption>17 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-18.webp" alt="18 Fold 齿轮"><figcaption>18 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="9"></div><figcaption>9 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="10"></div><figcaption>10 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="11"></div><figcaption>11 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="13"></div><figcaption>13 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="14"></div><figcaption>14 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="15"></div><figcaption>15 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="17"></div><figcaption>17 Fold</figcaption></figure>
+        <figure><div class="poster-fold-model-view" data-fold-model="18"></div><figcaption>18 Fold</figcaption></figure>
+        <canvas id="poster-fold-views" class="poster-fold-views" aria-label="八个不同对称阶齿轮的静态展示"></canvas>
         </div>
       </section>
       <section class="poster-multi-symmetry-section">
@@ -2520,6 +2531,7 @@
     import { createVelocitySymmetrizationScene, createPosterMapperScene } from "./js/scenes/mapper-intro.js?v=poster-velocity-enlarged";
     import { createDragonComparison } from "./js/scenes/dragon-comparison.js";
     import { createMultiSymmetryScene } from "./js/scenes/multi-symmetry.js?v=poster-static";
+    import { createFoldGallery } from "./js/scenes/fold-gallery.js";
 
     const comparisonCanvas = document.getElementById("poster-spinning-top-views");
     const velocityCanvas = document.getElementById("poster-velocity-voxels");
@@ -2540,6 +2552,8 @@
       document.getElementById("poster-multi-symmetry"), { staticComparison: true },
     );
     multiSymmetry.start();
+    const foldGallery = await createFoldGallery(document.getElementById("poster-fold-views"), { staticComparison: true });
+    foldGallery.start();
   </script>
 </body>
 </html>

@@ -286,7 +286,7 @@ function makeNeighborhoodOutline(center, radius, right, up, viewDirection) {
   return { group, rings };
 }
 
-export async function createMapperIntro(canvas) {
+export async function createMapperIntro(canvas, { onViewState } = {}) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(1);
   renderer.setClearColor(0x000000, 0);
@@ -389,6 +389,7 @@ export async function createMapperIntro(canvas) {
     const merge = ease((timeline - mergeStart) / mergeMilliseconds);
     const sphere = ease((timeline - mergeEnd) / sphereMilliseconds);
     const sharedView = timeline > selectEnd;
+    onViewState?.({ localZoom, merge });
     const bounds = canvas.getBoundingClientRect();
     if (bounds.width < 2 || bounds.height < 2) return;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -484,6 +485,12 @@ export async function createMapperIntro(canvas) {
   });
 
   return {
+    get stageCount() {
+      return stageTimes.length;
+    },
+    get isTransitioning() {
+      return timeline !== requestedTime;
+    },
     start(stage) {
       if (!active) {
         active = true;

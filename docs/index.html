@@ -254,16 +254,17 @@
     <section class="slide" aria-label="Slide 17" hidden>
       <h2 class="slide-heading">Applicaiton: Fold Manipulation</h2>
       <div class="fold-manipulation-gallery">
-        <figure><img src="./assets/images/fold-manipulation/fold-09.webp" alt="9 fold 齿轮" width="1024" height="1024"><figcaption>9 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-10.webp" alt="10 fold 齿轮" width="1024" height="1024"><figcaption>10 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-11.webp" alt="11 fold 齿轮" width="1024" height="1024"><figcaption>11 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-12.webp" alt="12 fold 齿轮" width="1024" height="1024"><figcaption>12 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-13.webp" alt="13 fold 齿轮" width="1024" height="1024"><figcaption>13 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-14.webp" alt="14 fold 齿轮" width="1024" height="1024"><figcaption>14 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-15.webp" alt="15 fold 齿轮" width="1024" height="1024"><figcaption>15 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-16.webp" alt="16 fold 齿轮" width="1024" height="1024"><figcaption>16 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-17.webp" alt="17 fold 齿轮" width="1024" height="1024"><figcaption>17 Fold</figcaption></figure>
-        <figure><img src="./assets/images/fold-manipulation/fold-18.webp" alt="18 fold 齿轮" width="1024" height="1024"><figcaption>18 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="9"></div><figcaption>9 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="10"></div><figcaption>10 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="11"></div><figcaption>11 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="12"></div><figcaption>12 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="13"></div><figcaption>13 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="14"></div><figcaption>14 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="15"></div><figcaption>15 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="16"></div><figcaption>16 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="17"></div><figcaption>17 Fold</figcaption></figure>
+        <figure><div class="fold-model-view" data-fold-model="18"></div><figcaption>18 Fold</figcaption></figure>
+        <canvas class="fold-gallery-views" aria-label="九阶至十八阶齿轮的旋转展示"></canvas>
       </div>
     </section>
 
@@ -334,6 +335,10 @@
       const visualsGallerySlide = visualsGalleryCanvas.closest(".slide");
       let visualsGalleryScene = null;
       let visualsGalleryLoading = null;
+      const foldGalleryCanvas = document.querySelector(".fold-gallery-views");
+      const foldGallerySlide = foldGalleryCanvas.closest(".slide");
+      let foldGalleryScene = null;
+      let foldGalleryLoading = null;
       const multiSymmetryCanvas = document.querySelector(".multi-symmetry-views");
       const multiSymmetrySlide = multiSymmetryCanvas.closest(".slide");
       let multiSymmetryScene = null;
@@ -534,6 +539,27 @@
         }
       }
 
+      function updateFoldGallery(active) {
+        if (!active) {
+          foldGalleryScene?.stop();
+          return;
+        }
+        if (foldGalleryScene) {
+          foldGalleryScene.start();
+          return;
+        }
+        if (!foldGalleryLoading) {
+          foldGalleryLoading = import("./js/scenes/fold-gallery.js")
+            .then(({ createFoldGallery }) => createFoldGallery(foldGalleryCanvas))
+            .then((scene) => {
+              foldGalleryScene = scene;
+              if (!foldGallerySlide.hidden) scene.start();
+            })
+            .catch((error) => console.error("无法加载齿轮 Fold Manipulation 模型", error))
+            .finally(() => { foldGalleryLoading = null; });
+        }
+      }
+
       function updateMultiSymmetry(active) {
         if (!active) {
           multiSymmetryScene?.stop();
@@ -728,6 +754,7 @@
         updateSpinningTopScene(slide.element === spinningTopSlide);
         updateShapeGallery(slide.element === shapeGallerySlide);
         updateVisualsGallery(slide.element === visualsGallerySlide);
+        updateFoldGallery(slide.element === foldGallerySlide);
         updateMultiSymmetry(slide.element === multiSymmetrySlide);
         updateSectorGear(slide.element === sectorGearSlide);
         updateDragonComparison(slide.element);
